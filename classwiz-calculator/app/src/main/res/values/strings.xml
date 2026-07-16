@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ClassWiz Calculator</string>
+    <string name="mode_comp">COMP</string>
+    <string name="deg">DEG</string>
+    <string name="rad">RAD</string>
+    <string name="grd">GRD</string>
+    <string name="math_error">Math ERROR</string>
+    <string name="syntax_error">Syntax ERROR</string>
+</resources>
