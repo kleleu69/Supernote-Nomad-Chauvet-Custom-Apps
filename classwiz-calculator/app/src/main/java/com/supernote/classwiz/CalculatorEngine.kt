@@ -1,6 +1,8 @@
 package com.supernote.classwiz
 
 import kotlin.math.*
+import kotlin.random.Random
+import java.util.Locale
 
 /**
  * ClassWiz scientific calculator engine.
@@ -299,12 +301,12 @@ class CalculatorEngine {
         "abs"               -> abs(x)
         "ceil"              -> ceil(x)
         "floor"             -> floor(x)
-        "round"             -> kotlin.math.round(x).toDouble()
+        "round"             -> round(x).toDouble()
         "fact", "factorial" -> factorial(x)
         "sign", "sgn"       -> sign(x)
         "inv"               -> if (x == 0.0) throw ArithmeticException("1/0 is undefined") else 1.0 / x
-        "rand"              -> Math.random()
-        "ranint"            -> floor(Math.random() * x)
+        "rand"              -> Random.nextDouble()
+        "ranint"            -> floor(Random.nextDouble() * x)
         else                -> throw IllegalArgumentException("Unknown function: $name")
     }
 
@@ -350,11 +352,11 @@ class CalculatorEngine {
 
         return if (abs(v) >= 1e10 || abs(v) < 1e-4) {
             // Scientific notation: keep 6 significant figures
-            val s = "%.6e".format(v)
+            val s = "%.6e".format(Locale.US, v)
             formatSciNotation(s)
         } else {
             // Fixed: up to 10 decimal places, trim trailing zeros
-            "%.10f".format(v).trimEnd('0').trimEnd('.')
+            "%.10f".format(Locale.US, v).trimEnd('0').trimEnd('.')
         }
     }
 

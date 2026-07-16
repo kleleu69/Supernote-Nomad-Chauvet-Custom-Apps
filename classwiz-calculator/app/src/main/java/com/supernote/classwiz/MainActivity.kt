@@ -10,6 +10,11 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.abs
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
+import kotlin.random.Random
 
 /**
  * Main activity for the ClassWiz scientific calculator.
@@ -347,7 +352,7 @@ class MainActivity : AppCompatActivity() {
 
             // ── Random number ─────────────────────────────────────────────────
             code == "random" -> {
-                val r = Math.random()
+                val r = Random.nextDouble()
                 setResultAndClear(engine.formatResult(r))
                 return
             }
