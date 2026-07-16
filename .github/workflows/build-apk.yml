@@ -26,9 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Grant execute permission for gradlew
         run: chmod +x classwiz-calculator/gradlew
         working-directory: ${{ github.workspace }}
