@@ -31,6 +31,11 @@ Use one dedicated branch per app track:
    - Upstream bases:
       - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
    - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
+  
+5. `feature/Casio-fx-Calc-app`
+   - Upstream bases:
+      - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
+   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
 ## Release output convention
 
