@@ -9,8 +9,6 @@ This repository now tracks the Chauvet OS foundation work from:
 
 The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and integration points used by all custom apps.
 
-## App development branches and APK release targets
-
 4. `feature/supernote-ClassWizCalculator`
    - Upstream bases:
       - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
