@@ -9,9 +9,33 @@ This repository now tracks the Chauvet OS foundation work from:
 
 The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and integration points used by all custom apps.
 
+## App development branches and APK release targets
+
+Use one dedicated branch per app track:
+
 1. `feature/supernote-ganttproject`
    - Upstream base: <https://github.com/bardsoftware/ganttproject.git>
    - Goal: Build and sideload a GanttProject app for Supernote Nomad.
+
+2. `feature/supernote-einkbro`
+   - Upstream base: <https://github.com/plateaukao/einkbro.git>
+   - Goal: Build and sideload a einkbro app for Supernote Nomad compatible APK release.
+
+3. `feature/supernote-Applefiles`
+   - Upstream bases:
+     - <https://github.com/Chieko-Seren/iCloud-Android.git>
+     - <https://github.com/asahiqin/icloud_for_android.git>
+   - Goal: Build and sideload an Apple files app for Supernote Nomad.
+
+4. `feature/supernote-ClassWizCalculator`
+   - Upstream bases:
+      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
+   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
+  
+5. `feature/Casio-fx-Calc-app`
+   - Upstream bases:
+      - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
+   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
 ## Release output convention
 
@@ -22,6 +46,24 @@ For each branch, publish signed APK artifacts through the branch CI/release proc
 Use `adb-install.ps1` to build and install apps to a connected Supernote (or any Android device) with robust ADB path detection.
 
 ### Examples
+
+Install iCloud debug build (default):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1
+```
+
+Install Gantt debug build:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug
+```
+
+Install iCloud release build (auto-signs unsigned release APK using debug keystore):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant release
+```
 
 Install all supported apps:
 
