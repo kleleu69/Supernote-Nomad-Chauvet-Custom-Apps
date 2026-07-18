@@ -26,19 +26,6 @@ Use `adb-install.ps1` to build and install apps to a connected Supernote (or any
 
 ### Examples
 
-Install iCloud debug build (default):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1
-```
-
-Install Gantt debug build:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug
-```
-
-
 Install all supported apps:
 
 ```powershell
