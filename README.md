@@ -10,27 +10,6 @@ This repository now tracks the Chauvet OS foundation work from:
 The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and integration points used by all custom apps.
 
 ## App development branches and APK release targets
-
-Use one dedicated branch per app track:
-
-1. `feature/supernote-ganttproject`
-   - Upstream base: <https://github.com/bardsoftware/ganttproject.git>
-   - Goal: Build and sideload a GanttProject app for Supernote Nomad.
-
-2. `feature/supernote-einkbro`
-   - Upstream base: <https://github.com/plateaukao/einkbro.git>
-   - Goal: Build and sideload a einkbro app for Supernote Nomad compatible APK release.
-
-3. `feature/supernote-Applefiles`
-   - Upstream bases:
-     - <https://github.com/Chieko-Seren/iCloud-Android.git>
-     - <https://github.com/asahiqin/icloud_for_android.git>
-   - Goal: Build and sideload an Apple files app for Supernote Nomad.
-
-4. `feature/supernote-ClassWizCalculator`
-   - Upstream bases:
-      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
-   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
   
 5. `feature/Casio-fx-Calc-app`
    - Upstream bases:
@@ -57,12 +36,6 @@ Install Gantt debug build:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug
-```
-
-Install iCloud release build (auto-signs unsigned release APK using debug keystore):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant release
 ```
 
 Install all supported apps:
