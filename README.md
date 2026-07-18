@@ -31,13 +31,11 @@ Use one dedicated branch per app track:
    - Upstream bases:
       - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
    - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
-
-5. `feature/Casio-cfx9960gt`
-   - Upstrema bases:
-      - <javascript:DownloadSubmit( 20171 , 'f' )>
-      - <https://www.casiocalc.org/to/fsdisplay.php?cat2disp=FS.FX.9860G.casm>
-      - <https://github.com/jeb5/Casio-Calculator-FX9860-Apps.git>
-   - Goal: Build and sideload a FX9860 app for Supernote Nomad.
+  
+5. `feature/Casio-fx-Calc-app`
+   - Upstream bases:
+      - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
+   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
 ## Release output convention
 
