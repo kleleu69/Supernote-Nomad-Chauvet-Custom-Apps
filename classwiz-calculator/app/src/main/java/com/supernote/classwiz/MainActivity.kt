@@ -5,6 +5,9 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
@@ -26,6 +29,10 @@ import kotlin.random.Random
  *  ALPHA  – activates variable-name entry (A–F, M).
  */
 class MainActivity : AppCompatActivity() {
+
+    private companion object {
+        const val GRID_COLUMNS = 6
+    }
 
     // ── Engine & state ─────────────────────────────────────────────────────────
 
@@ -50,103 +57,87 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnShiftRef: Button
     private lateinit var btnAlphaRef: Button
 
-    // ── Button definitions ─────────────────────────────────────────────────────
-    //
-    // Each entry: Triple(normalLabel, shiftLabel, alphaLabel)
-    // The parallel `actions` list holds Triple(normalAction, shiftAction, alphaAction)
-    // where each action is a String code handled by dispatchAction().
-
-    private val btnDefs = listOf(
-        // ── Row 0 ──────────────────────────────────────────────────────────────
-        Triple("SHIFT",   "",       ""),
-        Triple("ALPHA",   "",       ""),
-        Triple("MODE",    "SETUP",  ""),
-        Triple("◄DEL",    "INS",    ""),
-        Triple("AC",      "CLR",    ""),
-        // ── Row 1 ──────────────────────────────────────────────────────────────
-        Triple("sin",     "sin⁻¹", "A"),
-        Triple("cos",     "cos⁻¹", "B"),
-        Triple("tan",     "tan⁻¹", "C"),
-        Triple("ln",      "eˣ",    "D"),
-        Triple("log",     "10ˣ",   "E"),
-        // ── Row 2 ──────────────────────────────────────────────────────────────
-        Triple("x⁻¹",    "x!",    "F"),
-        Triple("x²",      "x³",    ""),
-        Triple("√x",      "∛x",    ""),
-        Triple("^",       "log_a", ""),
-        Triple("(",       "|x|",   ""),
-        // ── Row 3 ──────────────────────────────────────────────────────────────
-        Triple("S⇔D",    "HYP",   ""),
-        Triple("M+",      "M-",    "M"),
-        Triple("RCL",     "STO",   ""),
-        Triple("ENG",     "←ENG",  ""),
-        Triple(")",       "Ran#",  ""),
-        // ── Row 4 ──────────────────────────────────────────────────────────────
-        Triple("7",  "", ""),
-        Triple("8",  "", ""),
-        Triple("9",  "", ""),
-        Triple("÷",  "", ""),
-        Triple("×",  "", ""),
-        // ── Row 5 ──────────────────────────────────────────────────────────────
-        Triple("4",  "", ""),
-        Triple("5",  "", ""),
-        Triple("6",  "", ""),
-        Triple("-",  "", ""),
-        Triple("+",  "", ""),
-        // ── Row 6 ──────────────────────────────────────────────────────────────
-        Triple("1",  "", ""),
-        Triple("2",  "", ""),
-        Triple("3",  "", ""),
-        Triple("π",  "Ran#", ""),
-        Triple("e",  "",     ""),
-        // ── Row 7 ──────────────────────────────────────────────────────────────
-        Triple("0",    "",    ""),
-        Triple(".",    "",    ""),
-        Triple("×10ˣ","",    ""),
-        Triple("Ans",  "%",   ""),
-        Triple("=",    "",    ""),
+    private data class KeyDef(
+        val label: String,
+        val action: String,
+        val shiftLabel: String = "",
+        val shiftAction: String = "",
+        val alphaLabel: String = "",
+        val alphaAction: String = ""
     )
 
-    /** Action codes, parallel to [btnDefs]. */
-    private val btnActions = listOf(
-        // Row 0
-        Triple("shift",       "",          ""),
-        Triple("alpha",       "",          ""),
-        Triple("mode",        "setup",     ""),
-        Triple("del",         "ins",       ""),
-        Triple("ac",          "ac",        ""),
-        // Row 1
-        Triple("ins:sin(",    "ins:asin(", "ins:A"),
-        Triple("ins:cos(",    "ins:acos(", "ins:B"),
-        Triple("ins:tan(",    "ins:atan(", "ins:C"),
-        Triple("ins:ln(",     "ins:e^(",   "ins:D"),
-        Triple("ins:log(",    "ins:10^(",  "ins:E"),
-        // Row 2
-        Triple("ins:^(-1)",   "ins:!",    "ins:F"),
-        Triple("ins:^2",      "ins:^3",   ""),
-        Triple("ins:sqrt(",   "ins:cbrt(",""),
-        Triple("ins:^",       "logb",     ""),
-        Triple("ins:(",       "ins:abs(", ""),
-        // Row 3
-        Triple("sd",          "hyp",      ""),
-        Triple("mem+",        "mem-",     "ins:M"),
-        Triple("rcl",         "sto",      ""),
-        Triple("eng",         "engL",     ""),
-        Triple("ins:)",       "random",   ""),
-        // Row 4
-        Triple("ins:7","",""), Triple("ins:8","",""), Triple("ins:9","",""),
-        Triple("ins:÷","",""), Triple("ins:×","",""),
-        // Row 5
-        Triple("ins:4","",""), Triple("ins:5","",""), Triple("ins:6","",""),
-        Triple("ins:-","",""), Triple("ins:+","",""),
+    private val keys = listOf(
+        // Row 0: Soft keys
+        KeyDef("F1", "setup", shiftLabel = "SETUP"),
+        KeyDef("F2", "hyp", shiftLabel = "HYP"),
+        KeyDef("F3", "rcl", shiftLabel = "STO", shiftAction = "sto"),
+        KeyDef("F4", "mode", shiftLabel = "MODE"),
+        KeyDef("F5", "eng", shiftLabel = "<-ENG", shiftAction = "engL"),
+        KeyDef("F6", "random", shiftLabel = "RND"),
+
+        // Row 1: control/navigation
+        KeyDef("SHIFT", "shift"),
+        KeyDef("OPTN", "optn"),
+        KeyDef("VARS", "vars"),
+        KeyDef("MENU", "menu"),
+        KeyDef("<-", "left"),
+        KeyDef("UP", "up"),
+
+        // Row 2: secondary controls
+        KeyDef("ALPHA", "alpha"),
+        KeyDef("x^2", "ins:^2", alphaLabel = "A", alphaAction = "ins:A"),
+        KeyDef("^", "ins:^", alphaLabel = "B", alphaAction = "ins:B"),
+        KeyDef("EXIT", "exit"),
+        KeyDef("DOWN", "down"),
+        KeyDef("->", "right"),
+
+        // Row 3: trig / logs
+        KeyDef("X,T", "ins:X"),
+        KeyDef("log", "ins:log(", shiftLabel = "10^x", shiftAction = "ins:10^("),
+        KeyDef("ln", "ins:ln(", shiftLabel = "e^x", shiftAction = "ins:e^("),
+        KeyDef("sin", "ins:sin(", shiftLabel = "sin^-1", shiftAction = "ins:asin(", alphaLabel = "D", alphaAction = "ins:D"),
+        KeyDef("cos", "ins:cos(", shiftLabel = "cos^-1", shiftAction = "ins:acos(", alphaLabel = "E", alphaAction = "ins:E"),
+        KeyDef("tan", "ins:tan(", shiftLabel = "tan^-1", shiftAction = "ins:atan(", alphaLabel = "F", alphaAction = "ins:F"),
+
+        // Row 4: parenthesis and edits
+        KeyDef("ab/c", "sd"),
+        KeyDef("F<>D", "sd"),
+        KeyDef("(", "ins:("),
+        KeyDef(")", "ins:)"),
+        KeyDef(",", "ins:,"),
+        KeyDef("DEL", "del"),
+
+        // Row 5: upper numeric block
+        KeyDef("7", "ins:7"),
+        KeyDef("8", "ins:8"),
+        KeyDef("9", "ins:9"),
+        KeyDef("AC", "ac"),
+        KeyDef("M+", "mem+", shiftLabel = "M-", shiftAction = "mem-", alphaLabel = "M", alphaAction = "ins:M"),
+        KeyDef("Ans", "ins:Ans", shiftLabel = "%", shiftAction = "percent"),
+
         // Row 6
-        Triple("ins:1","",""), Triple("ins:2","",""), Triple("ins:3","",""),
-        Triple("ins:π","","ins:π"), Triple("ins:e","",""),
+        KeyDef("4", "ins:4"),
+        KeyDef("5", "ins:5"),
+        KeyDef("6", "ins:6"),
+        KeyDef("x", "ins:×"),
+        KeyDef("/", "ins:÷"),
+        KeyDef("sqrt", "ins:sqrt(", shiftLabel = "cbrt", shiftAction = "ins:cbrt("),
+
         // Row 7
-        Triple("ins:0","",""), Triple("ins:.","",""),
-        Triple("exp10",       "",         ""),
-        Triple("ins:Ans",     "percent",  ""),
-        Triple("eval",        "",         ""),
+        KeyDef("1", "ins:1"),
+        KeyDef("2", "ins:2"),
+        KeyDef("3", "ins:3"),
+        KeyDef("+", "ins:+"),
+        KeyDef("-", "ins:-"),
+        KeyDef("EXE", "eval"),
+
+        // Row 8
+        KeyDef("0", "ins:0"),
+        KeyDef(".", "ins:."),
+        KeyDef("EXP", "exp10"),
+        KeyDef("(-)", "ins:-"),
+        KeyDef("π", "ins:pi"),
+        KeyDef("e", "ins:e")
     )
 
     // ── onCreate ───────────────────────────────────────────────────────────────
@@ -174,9 +165,8 @@ class MainActivity : AppCompatActivity() {
         val grid = findViewById<GridLayout>(R.id.buttonGrid)
         grid.removeAllViews()
 
-        btnDefs.forEachIndexed { idx, def ->
-            val (label, shiftLabel, alphaLabel) = def
-            val (action, shiftAction, alphaAction) = btnActions[idx]
+        keys.forEachIndexed { idx, key ->
+            val label = key.label
 
             val btn = Button(this)
             btn.text        = label
@@ -191,15 +181,19 @@ class MainActivity : AppCompatActivity() {
 
             // Colour scheme
             styleButton(btn, label)
+            btn.text = renderKeyLabel(key)
 
             // Show SHIFT secondary label in smaller text above
-            if (shiftLabel.isNotEmpty()) {
-                btn.contentDescription = "$label / SHIFT: $shiftLabel"
+            val legendDescription = buildString {
+                append(label)
+                if (key.shiftLabel.isNotEmpty()) append(" / SHIFT: ${key.shiftLabel}")
+                if (key.alphaLabel.isNotEmpty()) append(" / ALPHA: ${key.alphaLabel}")
             }
+            btn.contentDescription = legendDescription
 
             // Layout params: equal weight in both dimensions
-            val rowSpec = GridLayout.spec(idx / 5, 1f)
-            val colSpec = GridLayout.spec(idx % 5, 1f)
+            val rowSpec = GridLayout.spec(idx / GRID_COLUMNS, 1f)
+            val colSpec = GridLayout.spec(idx % GRID_COLUMNS, 1f)
             val lp = GridLayout.LayoutParams(rowSpec, colSpec).apply {
                 width   = 0
                 height  = 0
@@ -208,7 +202,7 @@ class MainActivity : AppCompatActivity() {
             btn.layoutParams = lp
 
             btn.setOnClickListener {
-                onButtonPressed(label, shiftLabel, alphaLabel, action, shiftAction, alphaAction, btn)
+                onButtonPressed(key)
             }
 
             grid.addView(btn)
@@ -224,50 +218,72 @@ class MainActivity : AppCompatActivity() {
         val textColor: Int
         val bold: Boolean
         when (label) {
-            "="     -> { bgColor = Color.BLACK;                 textColor = Color.WHITE; bold = true  }
-            "SHIFT" -> { bgColor = Color.parseColor("#1A1A1A"); textColor = Color.WHITE; bold = false }
-            "ALPHA" -> { bgColor = Color.parseColor("#333333"); textColor = Color.WHITE; bold = false }
-            "AC"    -> { bgColor = Color.parseColor("#444444"); textColor = Color.WHITE; bold = false }
-            "◄DEL"  -> { bgColor = Color.parseColor("#666666"); textColor = Color.WHITE; bold = false }
-            "÷", "×", "-", "+" ->
-                        { bgColor = Color.WHITE;                textColor = Color.BLACK; bold = true  }
-            else    -> { bgColor = Color.WHITE;                 textColor = Color.BLACK; bold = false }
+            "EXE"   -> { bgColor = Color.parseColor("#3968B6"); textColor = Color.WHITE; bold = true }
+            "SHIFT" -> { bgColor = Color.parseColor("#EFA245"); textColor = Color.parseColor("#201A13"); bold = true }
+            "ALPHA" -> { bgColor = Color.parseColor("#B54A54"); textColor = Color.parseColor("#FFF5F5"); bold = true }
+            "AC", "DEL", "EXIT" -> { bgColor = Color.parseColor("#5A6472"); textColor = Color.WHITE; bold = true }
+            "F1", "F2", "F3", "F4", "F5", "F6" -> { bgColor = Color.parseColor("#7AA070"); textColor = Color.parseColor("#F9FFF5"); bold = true }
+            "OPTN", "VARS", "MENU", "sin", "cos", "tan", "log", "ln", "sqrt", "x^2", "^", "X,T", "ab/c", "F<>D", "<-", "->", "UP", "DOWN", "M+", "Ans", "EXP", "(-)", "pi", "e" -> {
+                bgColor = Color.parseColor("#404C59"); textColor = Color.parseColor("#F2F5FA"); bold = false
+            }
+            "x", "/", "+", "-" -> { bgColor = Color.parseColor("#6A7381"); textColor = Color.WHITE; bold = true }
+            else -> { bgColor = Color.parseColor("#D7DEE6"); textColor = Color.parseColor("#1E2630"); bold = true }
         }
         btn.setTextColor(textColor)
+        btn.minHeight = (btn.resources.displayMetrics.density * 54).toInt()
+        btn.minWidth = 0
         if (bold) btn.setTypeface(btn.typeface, Typeface.BOLD)
         // GradientDrawable gives us a solid fill + 1 px black border
         btn.background = GradientDrawable().apply {
             setColor(bgColor)
-            setStroke(1, Color.BLACK)
+            cornerRadius = btn.resources.displayMetrics.density * 18
+            setStroke((btn.resources.displayMetrics.density * 1.25f).toInt(), Color.parseColor("#1A1A1A"))
         }
+    }
+
+    private fun renderKeyLabel(key: KeyDef): CharSequence {
+        val builder = SpannableStringBuilder()
+        builder.append(key.label)
+
+        if (key.shiftLabel.isNotEmpty()) {
+            builder.append("\n")
+            val start = builder.length
+            builder.append(key.shiftLabel)
+            builder.setSpan(RelativeSizeSpan(0.72f), start, builder.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        if (key.alphaLabel.isNotEmpty()) {
+            builder.append("\n")
+            val start = builder.length
+            builder.append(key.alphaLabel)
+            builder.setSpan(RelativeSizeSpan(0.72f), start, builder.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        return builder
     }
 
     // ── Button press handling ──────────────────────────────────────────────────
 
-    private fun onButtonPressed(
-        label: String, shiftLabel: String, alphaLabel: String,
-        action: String, shiftAction: String, alphaAction: String,
-        btn: Button
-    ) {
+    private fun onButtonPressed(key: KeyDef) {
         // Resolve which action fires
         val resolvedAction: String = when {
-            isAlpha && alphaAction.isNotEmpty() -> {
+            isAlpha && key.alphaAction.isNotEmpty() -> {
                 clearModifiers()
-                alphaAction
+                key.alphaAction
             }
-            isShift && shiftAction.isNotEmpty() -> {
+            isShift && key.shiftAction.isNotEmpty() -> {
                 clearModifiers()
-                shiftAction
+                key.shiftAction
             }
             isShift || isAlpha -> {
                 // Modifier was set but this key has no alternate — fall through to normal
                 clearModifiers()
-                action
+                key.action
             }
-            else -> action
+            else -> key.action
         }
 
-        dispatchAction(resolvedAction, label)
+        dispatchAction(resolvedAction, key.label)
     }
 
     /** Execute a single action code. */
@@ -276,6 +292,21 @@ class MainActivity : AppCompatActivity() {
             // ── Modifier toggles ────────────────────────────────────────────
             code == "shift" -> { isShift = !isShift; isAlpha = false; updateStatus(); return }
             code == "alpha" -> { isAlpha = !isAlpha; isShift = false; updateStatus(); return }
+
+            // ── CFX control rows ───────────────────────────────────────────
+            code == "optn" -> showOptnDialog()
+            code == "vars" -> showRclDialog()
+            code == "menu" -> showSetupDialog()
+            code == "exit" -> clearModifiers()
+            code == "left" -> {
+                if (justEvaluated) { expr.clear(); justEvaluated = false }
+                else if (expr.isNotEmpty()) expr.deleteCharAt(expr.length - 1)
+            }
+            code == "right" || code == "up" || code == "down" -> {
+                // Cursor navigation is not yet modeled; keep behavior deterministic.
+                updateStatus()
+                return
+            }
 
             // ── Insert text into expression ─────────────────────────────────
             code.startsWith("ins:") -> {
@@ -431,15 +462,15 @@ class MainActivity : AppCompatActivity() {
         // Visually invert SHIFT / ALPHA buttons when active, keep 1px border
         if (::btnShiftRef.isInitialized) {
             val (bg, fg) = if (isShift) Color.WHITE to Color.BLACK
-                           else Color.parseColor("#1A1A1A") to Color.WHITE
+                           else Color.parseColor("#EFA245") to Color.parseColor("#201A13")
             btnShiftRef.setTextColor(fg)
-            btnShiftRef.background = GradientDrawable().apply { setColor(bg); setStroke(1, Color.BLACK) }
+            btnShiftRef.background = GradientDrawable().apply { setColor(bg); cornerRadius = btnShiftRef.resources.displayMetrics.density * 18; setStroke(1, Color.BLACK) }
         }
         if (::btnAlphaRef.isInitialized) {
             val (bg, fg) = if (isAlpha) Color.WHITE to Color.BLACK
-                           else Color.parseColor("#333333") to Color.WHITE
+                           else Color.parseColor("#B54A54") to Color.parseColor("#FFF5F5")
             btnAlphaRef.setTextColor(fg)
-            btnAlphaRef.background = GradientDrawable().apply { setColor(bg); setStroke(1, Color.BLACK) }
+            btnAlphaRef.background = GradientDrawable().apply { setColor(bg); cornerRadius = btnAlphaRef.resources.displayMetrics.density * 18; setStroke(1, Color.BLACK) }
         }
     }
 
@@ -546,6 +577,45 @@ class MainActivity : AppCompatActivity() {
             .setItems(fns) { _, which ->
                 if (justEvaluated) { expr.clear(); justEvaluated = false }
                 expr.append(fns[which])
+                updateDisplay()
+            }
+            .show()
+    }
+
+    private fun showOptnDialog() {
+        val labels = arrayOf(
+            "abs(",
+            "sqrt(",
+            "cbrt(",
+            "log(",
+            "ln(",
+            "sin(",
+            "cos(",
+            "tan(",
+            "!",
+            "pi",
+            "e",
+            "Ans"
+        )
+        val inserts = arrayOf(
+            "abs(",
+            "sqrt(",
+            "cbrt(",
+            "log(",
+            "ln(",
+            "sin(",
+            "cos(",
+            "tan(",
+            "!",
+            "π",
+            "e",
+            "Ans"
+        )
+        AlertDialog.Builder(this)
+            .setTitle("OPTN")
+            .setItems(labels) { _, which ->
+                if (justEvaluated) { expr.clear(); justEvaluated = false }
+                expr.append(inserts[which])
                 updateDisplay()
             }
             .show()
