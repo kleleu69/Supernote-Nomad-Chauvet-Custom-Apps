@@ -33,9 +33,13 @@ Use one dedicated branch per app track:
    - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
   
 5. `feature/Casio-fx-Calc-app`
-   - Upstream bases:
+   - Upstream base:
       - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
-   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
+   - Goal: Build and sideload a Casio fx Calculator app for Supernote Nomad.
+
+6. `offline-casio-clone` (standalone local app project)
+   - Upstream base: None (repo-local implementation).
+   - Goal: Build and sideload a standalone offline scientific calculator app for Supernote Nomad.
 
 ## Release output convention
 
@@ -77,3 +81,9 @@ Skip build and install an already-built APK variant:
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant debug -Build false
 
 ```
+
+## iCloud Drive browser app
+
+The Android app is now the primary path: it opens iCloud Drive directly in the Supernote browser shell and keeps the authenticated session in the app itself.
+
+There is no longer a PC-side sync bridge in this repository.

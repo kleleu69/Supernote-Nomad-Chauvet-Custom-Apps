@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iCloud Drive</string>
+    <string name="new_mail_notification">New Mail</string>
+    <string name="mail_notification_title">Apple Files Mail</string>
+    <string name="mail_notification_content">You have %1$d new emails</string>
+    
+    <string name="apple_login_client_id">com.icloud.android</string>
+    <string name="apple_login_success">Apple login successful</string>
+    <string name="apple_login_failed">Apple login failed: %s</string>
+    <string name="apple_login_cancelled">Apple login cancelled</string>
+    <string name="refresh">Refresh</string>
+    <string name="sync_target_info">Sync target path</string>
+    <string name="sync_target_path">/storage/emulated/0/Document/iCloud</string>
+    <string name="sync_download_started">Sync download started: %1$s</string>
+    <string name="sync_download_completed">Synced to Document/iCloud: %1$s</string>
+    <string name="sync_download_failed">Sync failed: %1$s</string>
+    <string name="sync_permission_needed">Storage permission is required on this Android version.</string>
+</resources> 
