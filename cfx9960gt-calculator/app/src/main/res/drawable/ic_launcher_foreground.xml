@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    App launcher icon: stylised "CFX" text on a black background.
+    Rendered as a vector drawable so no raster images needed.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background panel -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,0 L108,0 L108,108 L0,108 Z" />
+
+    <!-- Outer border / screen bezel -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,20 L96,20 L96,88 L12,88 Z" />
+
+    <!-- Screen interior (dark) -->
+    <path
+        android:fillColor="#111111"
+        android:pathData="M16,24 L92,24 L92,84 L16,84 Z" />
+
+    <!-- "CFX" text drawn as simple paths (monospace style) -->
+    <!-- C -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M38,36 Q28,36 28,54 Q28,72 38,72" />
+    <!-- F -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M44,36 L56,36 M44,36 L44,72 M44,54 L53,54" />
+    <!-- X -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M62,36 L78,72 M78,36 L62,72" />
+
+</vector>

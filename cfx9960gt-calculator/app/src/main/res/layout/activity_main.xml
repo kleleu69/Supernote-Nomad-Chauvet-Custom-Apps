@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    CFX-9960GTe  –  Main Calculator Layout (COMP mode)
+    Display panel (28%) + button grid (72%)
+    6 columns × 9 rows = 54 keys
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/body_bg"
+    tools:context=".MainActivity">
+
+    <!-- ── Display panel ──────────────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.28"
+        android:orientation="vertical"
+        android:background="@color/display_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="0dp">
+
+        <!-- Status row: SHIFT ALPHA HYP │ mode │ angle │ M -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvShiftIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/indicator_shift"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:paddingRight="4dp" />
+
+            <TextView
+                android:id="@+id/tvAlphaIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/indicator_alpha"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:paddingRight="4dp" />
+
+            <TextView
+                android:id="@+id/tvHypIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HYP"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/black"
+                android:visibility="invisible"
+                android:paddingRight="4dp" />
+
+            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvModeIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COMP"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/black"
+                android:paddingLeft="6dp" />
+
+            <TextView
+                android:id="@+id/tvAngleMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/black"
+                android:paddingLeft="8dp" />
+
+            <TextView
+                android:id="@+id/tvMemIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="M"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/black"
+                android:visibility="invisible"
+                android:paddingLeft="8dp" />
+
+        </LinearLayout>
+
+        <!-- Expression line (scrollable) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none"
+            android:fillViewport="false">
+
+            <TextView
+                android:id="@+id/tvExpr"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textSize="20sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/display_text"
+                android:gravity="center_vertical|end"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp" />
+
+        </HorizontalScrollView>
+
+        <!-- Result line -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="30sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/display_text"
+                android:textStyle="bold"
+                android:gravity="end"
+                android:paddingBottom="2dp" />
+
+        </HorizontalScrollView>
+
+        <!-- F-key label bar (F1…F6) -->
+        <LinearLayout
+            android:id="@+id/fKeyBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/fkey_bg">
+
+            <TextView android:id="@+id/tvF1"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="COMP" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center"
+                android:paddingTop="1dp" android:paddingBottom="1dp" />
+            <TextView android:id="@+id/tvF2"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GRAPH" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center" />
+            <TextView android:id="@+id/tvF3"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="STAT" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center" />
+            <TextView android:id="@+id/tvF4"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DEG" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center" />
+            <TextView android:id="@+id/tvF5"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RAD" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center" />
+            <TextView android:id="@+id/tvF6"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GRA" android:textSize="9sp" android:textColor="@color/fkey_text"
+                android:fontFamily="monospace" android:gravity="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Display / keyboard separator -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black" />
+
+    <!-- ── Button grid (6 cols × 9 rows) ──────────────────────────────────── -->
+    <GridLayout
+        android:id="@+id/buttonGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.72"
+        android:columnCount="6"
+        android:rowCount="9"
+        android:useDefaultMargins="false" />
+
+</LinearLayout>
