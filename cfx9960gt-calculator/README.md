@@ -92,6 +92,7 @@ cd cfx9960gt-calculator
 | Version | Notes |
 |---|---|
 | 1.0 | Initial release – COMP mode (full scientific), GRAPH mode (Y1/Y2/Y3, trace, table), STAT 1-var |
+| 1.1 | Launcher icon redesigned to visually represent the CFX-9960GT calculator (body, LCD, CFX colour stripe, F-keys, button grid) |
 
 ---
 
