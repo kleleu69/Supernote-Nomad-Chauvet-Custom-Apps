@@ -1,12 +1,14 @@
 package com.supernote.ganttproject.storage
 
 import android.content.Context
+import android.util.Log
 import com.supernote.ganttproject.models.Project
 import org.json.JSONArray
 import org.json.JSONException
 
 private const val PREFS_NAME = "ganttproject_data"
 private const val KEY_PROJECTS = "projects"
+private const val TAG = "ProjectStorage"
 
 object ProjectStorage {
 
@@ -20,7 +22,8 @@ object ProjectStorage {
                 list.add(Project.fromJson(arr.getJSONObject(i)))
             }
             list
-        } catch (_: JSONException) {
+        } catch (error: JSONException) {
+            Log.w(TAG, "Clearing corrupted stored projects JSON", error)
             prefs.edit().remove(KEY_PROJECTS).apply()
             mutableListOf()
         }
