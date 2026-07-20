@@ -8,7 +8,7 @@
     device (e.g. Ratta Supernote Nomad).
 
 .PARAMETER App
-    Which app to build/install: gantt | classwiz | icloud | all
+    Which app to build/install: gantt | icloud | all
     Default: gantt
 
 .PARAMETER Variant
@@ -28,16 +28,12 @@
     powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Build false
 
 .EXAMPLE
-    # Build and install ClassWiz debug APK
-    powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App classwiz -Variant debug
-
-.EXAMPLE
     # Build and install all apps
     powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App all -Variant debug
 #>
 
 param(
-    [ValidateSet("gantt","classwiz","icloud","all")]
+    [ValidateSet("gantt","icloud","all")]
     [string]$App = "gantt",
 
     [ValidateSet("debug","release")]
@@ -73,8 +69,15 @@ function Find-ADB {
 
 function Invoke-Gradle {
     param([string]$ProjectDir, [string]$Task)
-    $gradlew = Join-Path $ProjectDir "gradlew.bat"
-    if (-not (Test-Path $gradlew)) { $gradlew = Join-Path $ProjectDir "gradlew" }
+    $isWindowsHost = if ($PSVersionTable.PSVersion.Major -lt 6) {
+        $true
+    } else {
+        $IsWindows
+    }
+    $preferredWrapper = if ($isWindowsHost) { "gradlew.bat" } else { "gradlew" }
+    $fallbackWrapper = if ($isWindowsHost) { "gradlew" } else { "gradlew.bat" }
+    $gradlew = Join-Path $ProjectDir $preferredWrapper
+    if (-not (Test-Path $gradlew)) { $gradlew = Join-Path $ProjectDir $fallbackWrapper }
     Write-Host "▶ Building $ProjectDir ($Task)..." -ForegroundColor Cyan
     & $gradlew $Task "--no-daemon" --project-dir $ProjectDir
     if ($LASTEXITCODE -ne 0) { throw "Gradle build failed for $ProjectDir" }
@@ -97,11 +100,6 @@ $AppMap = @{
     "gantt"   = @{
         Dir = "ganttproject"
         Apk = if ($Variant -eq "release") { "ganttproject\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "ganttproject\app\build\outputs\apk\debug\app-debug.apk" }
-        Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
-    }
-    "classwiz" = @{
-        Dir = "classwiz-calculator"
-        Apk = if ($Variant -eq "release") { "classwiz-calculator\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "classwiz-calculator\app\build\outputs\apk\debug\app-debug.apk" }
         Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
     }
     "icloud" = @{
@@ -130,7 +128,7 @@ try {
         Write-Warning "No ADB device detected. Connect your Supernote Nomad via USB and enable ADB."
     }
 
-    $appsToProcess = if ($App -eq "all") { @("gantt","classwiz","icloud") } else { @($App) }
+    $appsToProcess = if ($App -eq "all") { @("gantt","icloud") } else { @($App) }
 
     foreach ($appKey in $appsToProcess) {
         if (-not $AppMap.ContainsKey($appKey)) {

@@ -59,10 +59,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAddProjectDialog(tvEmpty: TextView) {
+        val density = resources.displayMetrics.density
         val et = EditText(this).apply {
             hint = getString(R.string.project_name)
             textSize = 16f
-            setPadding(32, 16, 32, 16)
+            setPadding(
+                (32 * density).toInt(),
+                (16 * density).toInt(),
+                (32 * density).toInt(),
+                (16 * density).toInt()
+            )
         }
         AlertDialog.Builder(this)
             .setTitle(R.string.new_project)

@@ -12,6 +12,7 @@
     <string name="delete">Delete</string>
     <string name="tasks">Tasks</string>
     <string name="add_task">Add Task</string>
+    <string name="add_task_button">+ Task</string>
     <string name="edit_task">Edit Task</string>
     <string name="task_name">Task name</string>
     <string name="start_day">Start day (1–365)</string>

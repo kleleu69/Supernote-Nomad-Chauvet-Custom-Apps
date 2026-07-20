@@ -40,7 +40,7 @@ class GanttChartView @JvmOverloads constructor(
     }
     private val paintHeaderText = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.header_text)
-        textSize = 11f.dp
+        textSize = 11f.sp
     }
     private val paintLabelBg = Paint().apply {
         color = ContextCompat.getColor(context, R.color.row_label_bg)
@@ -61,7 +61,7 @@ class GanttChartView @JvmOverloads constructor(
     }
     private val paintLabel = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.black)
-        textSize = 13f.dp
+        textSize = 13f.sp
     }
     private val paintRowBorder = Paint().apply {
         color = ContextCompat.getColor(context, R.color.grid_line)
@@ -73,6 +73,7 @@ class GanttChartView @JvmOverloads constructor(
     }
 
     private val Float.dp get() = this * context.resources.displayMetrics.density
+    private val Float.sp get() = this * context.resources.displayMetrics.scaledDensity
 
     private var totalDays = 30
 
