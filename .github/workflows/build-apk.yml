@@ -1,5 +1,8 @@
 name: Build & Release APK
 
+env:
+  DEBUG_ARTIFACT_SUFFIX: -debug
+
 on:
   push:
     branches: [ "main", "copilot/**" ]
@@ -15,6 +18,8 @@ jobs:
   discover-projects:
     name: Discover Android app projects
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       projects: ${{ steps.discover.outputs.projects }}
 
@@ -26,37 +31,59 @@ jobs:
         id: discover
         shell: bash
         run: |
-          python <<'PY' >> "$GITHUB_OUTPUT"
+          set -euo pipefail
+          output_file="$(mktemp)"
+          # Keep the Python script literal inside the shell step.
+          python3 <<'PY' > "$output_file"
           import json
+          import sys
           from pathlib import Path
 
           projects = []
           for path in sorted(Path(".").iterdir()):
               if not path.is_dir():
                   continue
+              if path.name.startswith("."):
+                  continue
               if not (path / "gradlew").is_file():
                   continue
-              if not (path / "settings.gradle").is_file():
+              if not any((path / name).is_file() for name in ("settings.gradle", "settings.gradle.kts")):
                   continue
-              if not (path / "app" / "build.gradle").is_file():
+
+              has_android_module = False
+              for module in path.iterdir():
+                  if not module.is_dir() or module.name.startswith("."):
+                      continue
+                  if not any((module / name).is_file() for name in ("build.gradle", "build.gradle.kts")):
+                      continue
+                  if not (module / "src" / "main" / "AndroidManifest.xml").is_file():
+                      continue
+                  has_android_module = True
+                  break
+
+              if not has_android_module:
                   continue
 
               projects.append({
-                  "name": path.name,
                   "path": path.name,
-                  "apk": f"{path.name}/app/build/outputs/apk/debug/app-debug.apk"
+                  # Assumes standard Android Gradle debug APK output locations within each project.
+                  "apk_glob": f"{path.name}/**/build/outputs/apk/debug/*.apk"
               })
 
           if not projects:
-              raise SystemExit("No buildable Android app projects found in the repository root.")
+              print("::error::No buildable Android app projects found in the repository root")
+              sys.exit(1)
 
           print("projects=" + json.dumps(projects))
           PY
+          cat "$output_file" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build ${{ matrix.project.name }} Debug APK
+    name: Build ${{ matrix.project.path }} Debug APK
     runs-on: ubuntu-latest
     needs: discover-projects
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -83,15 +110,15 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.project.name }}-debug
-          path: ${{ matrix.project.apk }}
+          name: ${{ matrix.project.path }}${{ env.DEBUG_ARTIFACT_SUFFIX }}
+          path: ${{ matrix.project.apk_glob }}
           retention-days: 30
           if-no-files-found: error
 
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    needs: build
+    needs: [discover-projects, build]
     if: ${{ github.event.inputs.create_release == 'true' }}
     permissions:
       contents: write
@@ -101,14 +128,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: release-assets
-          pattern: "*-debug"
-          merge-multiple: true
+
+      - name: Prepare release metadata
+        id: release-meta
+        shell: bash
+        run: |
+          echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: Supernote Android Apps v1.0.${{ github.run_number }}
+          tag_name: build-${{ steps.release-meta.outputs.short_sha }}
+          name: Supernote Android Apps build-${{ steps.release-meta.outputs.short_sha }}
           body: |
             Debug APK bundle built from Android app projects discovered in the repository root for Supernote Nomad (Chauvet OS).
 
@@ -116,6 +147,6 @@ jobs:
             1. Download the APK asset you want below.
             2. Transfer it to your Supernote Nomad via USB or WiFi.
             3. On the tablet, enable *Install unknown apps* and open the APK to install.
-          files: release-assets/*.apk
+          files: release-assets/**/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
