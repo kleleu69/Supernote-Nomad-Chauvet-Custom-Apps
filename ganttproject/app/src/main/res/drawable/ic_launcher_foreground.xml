@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GanttProject icon: white background with black Gantt chart bars -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Icon background fill (handled by adaptive-icon background layer) -->
+
+    <!-- Title bar / header strip -->
+    <path
+        android:pathData="M10,10 L98,10 L98,24 L10,24 Z"
+        android:fillColor="#000000" />
+
+    <!-- "GP" lettering in header -->
+    <!-- G -->
+    <path
+        android:pathData="M22,13 Q17,13 17,17 Q17,21 22,21 L22,18 L20,18"
+        android:fillColor="#000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2" />
+    <!-- P -->
+    <path
+        android:pathData="M27,13 L27,21 M27,13 L31,13 Q34,13 34,17 Q34,21 31,21 L27,21"
+        android:fillColor="#000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2" />
+
+    <!-- Row label column background -->
+    <path
+        android:pathData="M10,28 L28,28 L28,98 L10,98 Z"
+        android:fillColor="#EEEEEE" />
+
+    <!-- Grid area background -->
+    <path
+        android:pathData="M28,28 L98,28 L98,98 L28,98 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Outer border -->
+    <path
+        android:pathData="M10,10 L98,10 L98,98 L10,98 L10,10 Z"
+        android:fillColor="#00000000"
+        android:strokeColor="#000000"
+        android:strokeWidth="2" />
+
+    <!-- Column divider (label / chart) -->
+    <path
+        android:pathData="M28,28 L28,98"
+        android:fillColor="#000000"
+        android:strokeColor="#000000"
+        android:strokeWidth="1.5" />
+
+    <!-- Horizontal row separators -->
+    <path android:pathData="M10,40 L98,40" android:strokeColor="#CCCCCC" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M10,52 L98,52" android:strokeColor="#CCCCCC" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M10,64 L98,64" android:strokeColor="#CCCCCC" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M10,76 L98,76" android:strokeColor="#CCCCCC" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M10,88 L98,88" android:strokeColor="#CCCCCC" android:strokeWidth="1" android:fillColor="#00000000"/>
+
+    <!-- Vertical grid lines -->
+    <path android:pathData="M46,28 L46,98" android:strokeColor="#EEEEEE" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M64,28 L64,98" android:strokeColor="#EEEEEE" android:strokeWidth="1" android:fillColor="#00000000"/>
+    <path android:pathData="M82,28 L82,98" android:strokeColor="#EEEEEE" android:strokeWidth="1" android:fillColor="#00000000"/>
+
+    <!-- Row labels (short black rectangles simulating text) -->
+    <path android:pathData="M12,33 L26,33 L26,37 L12,37 Z" android:fillColor="#888888"/>
+    <path android:pathData="M12,45 L24,45 L24,49 L12,49 Z" android:fillColor="#888888"/>
+    <path android:pathData="M12,57 L26,57 L26,61 L12,61 Z" android:fillColor="#888888"/>
+    <path android:pathData="M12,69 L23,69 L23,73 L12,73 Z" android:fillColor="#888888"/>
+    <path android:pathData="M12,81 L26,81 L26,85 L12,85 Z" android:fillColor="#888888"/>
+
+    <!-- Gantt bars (row 1: spans col1–col3) -->
+    <path android:pathData="M30,32 L72,32 L72,38 L30,38 Z" android:fillColor="#000000"/>
+
+    <!-- Gantt bars (row 2: spans col2–col4) -->
+    <path android:pathData="M44,44 L86,44 L86,50 L44,50 Z" android:fillColor="#000000"/>
+
+    <!-- Gantt bars (row 3: spans col1–col2) -->
+    <path android:pathData="M30,56 L56,56 L56,62 L30,62 Z" android:fillColor="#333333"/>
+
+    <!-- Gantt bars (row 4: spans col3–col4) -->
+    <path android:pathData="M62,68 L92,68 L92,74 L62,74 Z" android:fillColor="#000000"/>
+
+    <!-- Gantt bars (row 5: spans col1–col4) -->
+    <path android:pathData="M30,80 L94,80 L94,86 L30,86 Z" android:fillColor="#555555"/>
+
+    <!-- Today-line marker -->
+    <path android:pathData="M64,28 L64,98" android:strokeColor="#000000" android:strokeWidth="2" android:fillColor="#00000000"/>
+
+</vector>

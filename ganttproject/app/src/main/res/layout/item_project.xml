@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="12dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tvProjectName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvTaskCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/gray_mid"
+        android:paddingRight="8dp" />
+
+    <Button
+        android:id="@+id/btnDeleteProject"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:text="✕"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:background="@color/gray_dark"
+        android:padding="0dp"
+        android:stateListAnimator="@null" />
+
+</LinearLayout>

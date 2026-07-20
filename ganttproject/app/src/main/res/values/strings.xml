@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GanttProject</string>
+    <string name="projects">Projects</string>
+    <string name="new_project">New Project</string>
+    <string name="project_name">Project name</string>
+    <string name="add_project">Add Project</string>
+    <string name="delete_project">Delete Project</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="tasks">Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="task_name">Task name</string>
+    <string name="start_day">Start day (1–365)</string>
+    <string name="duration_days">Duration (days)</string>
+    <string name="no_projects">No projects yet.\nTap + to create one.</string>
+    <string name="no_tasks">No tasks yet.\nTap + to add one.</string>
+    <string name="gantt_chart">Gantt Chart</string>
+    <string name="confirm_delete">Delete?</string>
+    <string name="delete_project_msg">Delete project \'%s\' and all its tasks?</string>
+    <string name="delete_task_msg">Delete task \'%s\'?</string>
+</resources>

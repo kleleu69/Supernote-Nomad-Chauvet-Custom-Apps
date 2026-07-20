@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="◀"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:stateListAnimator="@null" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingLeft="12dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Task name -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/task_name"
+        android:textSize="13sp"
+        android:textColor="@color/gray_mid"
+        android:paddingBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:background="@null"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:hint="e.g. Design phase"
+        android:maxLines="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Start day -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_day"
+        android:textSize="13sp"
+        android:textColor="@color/gray_mid"
+        android:paddingBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etStartDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:background="@null"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:hint="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Duration -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/duration_days"
+        android:textSize="13sp"
+        android:textColor="@color/gray_mid"
+        android:paddingBottom="4dp" />
+
+    <EditText
+        android:id="@+id/etDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:background="@null"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:hint="7" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Save button -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/save"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:stateListAnimator="@null" />
+
+</LinearLayout>
