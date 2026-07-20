@@ -96,17 +96,17 @@ function Install-Apk {
 $AppMap = @{
     "gantt"   = @{
         Dir = "ganttproject"
-        Apk = "ganttproject\app\build\outputs\apk\$Variant\app-$Variant.apk"
+        Apk = if ($Variant -eq "release") { "ganttproject\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "ganttproject\app\build\outputs\apk\debug\app-debug.apk" }
         Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
     }
     "classwiz" = @{
         Dir = "classwiz-calculator"
-        Apk = "classwiz-calculator\app\build\outputs\apk\$Variant\app-$Variant.apk"
+        Apk = if ($Variant -eq "release") { "classwiz-calculator\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "classwiz-calculator\app\build\outputs\apk\debug\app-debug.apk" }
         Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
     }
     "icloud" = @{
         Dir = "icloud"
-        Apk = "icloud\app\build\outputs\apk\$Variant\app-$Variant.apk"
+        Apk = if ($Variant -eq "release") { "icloud\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "icloud\app\build\outputs\apk\debug\app-debug.apk" }
         Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
     }
 }
@@ -148,10 +148,13 @@ try {
         if ($Variant -eq "release" -and (Test-Path $apkPath)) {
             Write-Host "ℹ️  Release build – signing with debug keystore for sideload..." -ForegroundColor DarkYellow
             $debugKs = "$env:USERPROFILE\.android\debug.keystore"
-            if (Test-Path $debugKs) {
+            $apksigner = Get-Command apksigner -ErrorAction SilentlyContinue
+            if ($apksigner -and (Test-Path $debugKs)) {
                 $signedApk = $apkPath -replace "\.apk$", "-signed.apk"
-                & apksigner sign --ks $debugKs --ks-pass pass:android --key-pass pass:android --out $signedApk $apkPath 2>$null
+                & $apksigner.Source sign --ks $debugKs --ks-pass pass:android --key-pass pass:android --out $signedApk $apkPath 2>$null
                 if ($LASTEXITCODE -eq 0) { $apkPath = $signedApk }
+            } else {
+                Write-Warning "apksigner/debug keystore not found. Installing unsigned release APK."
             }
         }
 

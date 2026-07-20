@@ -30,9 +30,10 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val task = tasks[position]
+        val resources = holder.itemView.resources
         holder.tvName.text = task.name
-        holder.tvStart.text = "Day ${task.startDay}"
-        holder.tvDuration.text = "${task.durationDays}d"
+        holder.tvStart.text = resources.getString(R.string.day_format, task.startDay)
+        holder.tvDuration.text = resources.getQuantityString(R.plurals.duration_days_short, task.durationDays, task.durationDays)
         holder.btnEdit.setOnClickListener { onEdit(task) }
         holder.btnDelete.setOnClickListener { onDelete(task) }
     }

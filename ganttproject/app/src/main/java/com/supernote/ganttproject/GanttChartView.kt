@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.supernote.ganttproject.models.Task
+import java.util.Calendar
 
 /**
  * Custom view that renders a Gantt chart for a list of tasks.
@@ -82,9 +83,11 @@ class GanttChartView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val w = (labelWidth + totalDays * dayWidth).toInt()
-        val h = (headerHeight + tasks.size * rowHeight).toInt().coerceAtLeast(80)
-        setMeasuredDimension(w, h)
+        val desiredWidth = (labelWidth + totalDays * dayWidth).toInt()
+        val desiredHeight = (headerHeight + tasks.size * rowHeight).toInt().coerceAtLeast(80)
+        val measuredWidth = resolveSize(desiredWidth, widthMeasureSpec)
+        val measuredHeight = resolveSize(desiredHeight, heightMeasureSpec)
+        setMeasuredDimension(measuredWidth, measuredHeight)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -142,8 +145,8 @@ class GanttChartView @JvmOverloads constructor(
     }
 
     private fun drawTodayLine(canvas: Canvas) {
-        // today = day 1 marker (leftmost, can be scrolled)
-        val x = labelWidth
+        val todayDayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR).coerceIn(1, totalDays)
+        val x = labelWidth + (todayDayOfYear - 1) * dayWidth
         canvas.drawLine(x, 0f, x, height.toFloat(), paintTodayLine)
     }
 }
