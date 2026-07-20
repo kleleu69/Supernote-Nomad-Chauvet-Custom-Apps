@@ -21,18 +21,7 @@ Use one dedicated branch per app track:
    - Upstream base: <https://github.com/plateaukao/einkbro.git>
    - Goal: Build and sideload a einkbro app for Supernote Nomad compatible APK release.
 
-3. `feature/supernote-Applefiles`
-   - Upstream bases:
-     - <https://github.com/Chieko-Seren/iCloud-Android.git>
-     - <https://github.com/asahiqin/icloud_for_android.git>
-   - Goal: Build and sideload an Apple files app for Supernote Nomad.
-
-4. `feature/supernote-ClassWizCalculator`
-   - Upstream bases:
-      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
-   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
-  
-5. `feature/Casio-fx-Calc-app`
+3. `feature/Casio-fx-Calc-app`
    - Upstream bases:
       - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
    - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
@@ -47,33 +36,27 @@ Use `adb-install.ps1` to build and install apps to a connected Supernote (or any
 
 ### Examples
 
-Install iCloud debug build (default):
+Install GanttProject debug build (default):
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1
 ```
 
-Install Gantt debug build:
+Install GanttProject debug build explicitly:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug
 ```
 
-Install iCloud release build (auto-signs unsigned release APK using debug keystore):
+Install GanttProject release build (auto-signs unsigned release APK using debug keystore):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant release
-```
-
-Install all supported apps:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App all -Variant debug
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant release
 ```
 
 Skip build and install an already-built APK variant:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant debug -Build false
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug -Build false
 
 ```

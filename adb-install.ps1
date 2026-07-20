@@ -8,7 +8,7 @@
     device (e.g. Ratta Supernote Nomad).
 
 .PARAMETER App
-    Which app to build/install: gantt | icloud | all
+    Which app to build/install: gantt
     Default: gantt
 
 .PARAMETER Variant
@@ -27,13 +27,10 @@
     # Install already-built GanttProject APK (skip build)
     powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Build false
 
-.EXAMPLE
-    # Build and install all apps
-    powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App all -Variant debug
 #>
 
 param(
-    [ValidateSet("gantt","icloud","all")]
+    [ValidateSet("gantt")]
     [string]$App = "gantt",
 
     [ValidateSet("debug","release")]
@@ -102,11 +99,6 @@ $AppMap = @{
         Apk = if ($Variant -eq "release") { "ganttproject\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "ganttproject\app\build\outputs\apk\debug\app-debug.apk" }
         Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
     }
-    "icloud" = @{
-        Dir = "icloud"
-        Apk = if ($Variant -eq "release") { "icloud\app\build\outputs\apk\release\app-release-unsigned.apk" } else { "icloud\app\build\outputs\apk\debug\app-debug.apk" }
-        Task = if ($Variant -eq "release") { "assembleRelease" } else { "assembleDebug" }
-    }
 }
 
 # ── Main ───────────────────────────────────────────────────────────────────────
@@ -128,7 +120,7 @@ try {
         Write-Warning "No ADB device detected. Connect your Supernote Nomad via USB and enable ADB."
     }
 
-    $appsToProcess = if ($App -eq "all") { @("gantt","icloud") } else { @($App) }
+    $appsToProcess = @($App)
 
     foreach ($appKey in $appsToProcess) {
         if (-not $AppMap.ContainsKey($appKey)) {
