@@ -246,7 +246,7 @@ class MainActivity : AppCompatActivity() {
                     bgColor   = Color.parseColor("#1A1A1A")
                     textColor = Color.WHITE
                 }
-                keyDef.label[0].isDigit() || keyDef.label == "." || keyDef.label == "," -> {
+                keyDef.label.isNotEmpty() && keyDef.label[0].isDigit() || keyDef.label == "." || keyDef.label == "," -> {
                     bgColor   = Color.WHITE
                     textColor = Color.BLACK
                 }
@@ -460,7 +460,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertToEng() {
         val v = try { engine.evaluate(expr.toString()) } catch (_: Exception) { return }
-        val exp3 = (floor(log10(Math.abs(v)) / 3.0) * 3.0).toInt()
+        if (v == 0.0 || !v.isFinite()) return
+        val exp3 = (floor(log10(abs(v)) / 3.0) * 3.0).toInt()
         val mantissa = v / Math.pow(10.0, exp3.toDouble())
         expr.clear()
         expr.append("${engine.formatResult(mantissa)}×10^$exp3")

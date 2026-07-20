@@ -284,7 +284,7 @@ class CfxEngine {
         "cos"               -> cos(toRad(x))
         "tan"               -> {
             val r = toRad(x)
-            if (abs(cos(r)) < 1e-15) throw ArithmeticException("tan undefined for this angle")
+            if (abs(cos(r)) < 1e-15) throw ArithmeticException("tan undefined (angle near π/2 + nπ)")
             tan(r)
         }
         "asin", "arcsin"    -> fromRad(asin(x.coerceIn(-1.0, 1.0)))

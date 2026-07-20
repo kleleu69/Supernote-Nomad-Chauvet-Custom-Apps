@@ -5,6 +5,9 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.abs
+import kotlin.math.ceil
+import kotlin.math.floor
 
 /**
  * Custom canvas view that renders function graphs for the CFX-9960GTe.
@@ -126,14 +129,14 @@ class GraphView @JvmOverloads constructor(
     private fun drawGrid(canvas: Canvas, w: Float, h: Float) {
         if (!showGrid) return
         // Vertical grid lines
-        var x = Math.ceil(xMin / xScale) * xScale
+        var x = ceil(xMin / xScale) * xScale
         while (x <= xMax) {
             val sx = toScreenX(x, w)
             canvas.drawLine(sx, 0f, sx, h, gridPaint)
             x += xScale
         }
         // Horizontal grid lines
-        var y = Math.ceil(yMin / yScale) * yScale
+        var y = ceil(yMin / yScale) * yScale
         while (y <= yMax) {
             val sy = toScreenY(y, h)
             canvas.drawLine(0f, sy, w, sy, gridPaint)
@@ -152,9 +155,9 @@ class GraphView @JvmOverloads constructor(
         canvas.drawLine(xAxis, 0f, xAxis, h, axisPaint)
 
         // Tick marks + labels on X-axis
-        var x = Math.ceil(xMin / xScale) * xScale
+        var x = ceil(xMin / xScale) * xScale
         while (x <= xMax) {
-            if (Math.abs(x) > 1e-10) {
+            if (abs(x) > 1e-10) {
                 val sx = toScreenX(x, w)
                 canvas.drawLine(sx, yAxis - 5f, sx, yAxis + 5f, axisPaint)
                 val label = formatAxisLabel(x)
@@ -163,9 +166,9 @@ class GraphView @JvmOverloads constructor(
             x += xScale
         }
         // Tick marks + labels on Y-axis
-        var y = Math.ceil(yMin / yScale) * yScale
+        var y = ceil(yMin / yScale) * yScale
         while (y <= yMax) {
-            if (Math.abs(y) > 1e-10) {
+            if (abs(y) > 1e-10) {
                 val sy = toScreenY(y, h)
                 canvas.drawLine(xAxis - 5f, sy, xAxis + 5f, sy, axisPaint)
                 val label = formatAxisLabel(y)
@@ -250,7 +253,7 @@ class GraphView @JvmOverloads constructor(
         xMin + sx.toDouble() / width * (xMax - xMin)
 
     private fun formatAxisLabel(v: Double): String {
-        if (v == Math.floor(v) && Math.abs(v) < 1000) return v.toInt().toString()
+        if (v == floor(v) && abs(v) < 1000) return v.toInt().toString()
         return "%.1f".format(v)
     }
 }
