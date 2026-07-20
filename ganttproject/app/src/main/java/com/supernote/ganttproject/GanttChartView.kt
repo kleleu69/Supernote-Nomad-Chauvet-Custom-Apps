@@ -66,6 +66,10 @@ class GanttChartView @JvmOverloads constructor(
         color = ContextCompat.getColor(context, R.color.grid_line)
         strokeWidth = 1f
     }
+    private val paintColumnTick = Paint().apply {
+        color = ContextCompat.getColor(context, R.color.header_column_tick)
+        strokeWidth = 1f
+    }
 
     private val Float.dp get() = this * context.resources.displayMetrics.density
 
@@ -99,7 +103,7 @@ class GanttChartView @JvmOverloads constructor(
             val x = labelWidth + (day - 1) * dayWidth
             // vertical tick every 7 days
             if (day % 7 == 1) {
-                canvas.drawLine(x, 0f, x, headerHeight, paintGrid.also { it.color = 0x88FFFFFF.toInt() })
+                canvas.drawLine(x, 0f, x, headerHeight, paintColumnTick)
                 val label = "D$day"
                 paintHeaderText.getTextBounds(label, 0, label.length, textBounds)
                 canvas.drawText(label, x + 2f, headerHeight - 6f.dp, paintHeaderText)

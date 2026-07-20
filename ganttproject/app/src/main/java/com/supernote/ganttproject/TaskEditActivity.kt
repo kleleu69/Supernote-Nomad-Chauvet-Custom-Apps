@@ -52,15 +52,15 @@ class TaskEditActivity : AppCompatActivity() {
             val duration = etDuration.text.toString().toIntOrNull() ?: 0
 
             if (name.isEmpty()) {
-                Toast.makeText(this, "Task name is required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.error_task_name_required, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (startDay < 1) {
-                Toast.makeText(this, "Start day must be ≥ 1", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.error_start_day, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (duration < 1) {
-                Toast.makeText(this, "Duration must be ≥ 1 day", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.error_duration, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

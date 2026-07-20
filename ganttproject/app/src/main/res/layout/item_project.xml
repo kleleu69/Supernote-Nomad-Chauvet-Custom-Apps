@@ -33,6 +33,7 @@
         android:textColor="@color/white"
         android:background="@color/gray_dark"
         android:padding="0dp"
+        android:contentDescription="@string/delete_project"
         android:stateListAnimator="@null" />
 
 </LinearLayout>

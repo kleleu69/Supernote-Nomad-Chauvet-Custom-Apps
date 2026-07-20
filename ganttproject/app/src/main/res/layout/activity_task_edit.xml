@@ -24,6 +24,7 @@
             android:background="@color/black"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
+            android:contentDescription="@string/back"
             android:stateListAnimator="@null" />
 
         <TextView

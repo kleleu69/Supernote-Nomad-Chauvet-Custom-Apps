@@ -20,6 +20,10 @@
     <string name="no_tasks">No tasks yet.\nTap + to add one.</string>
     <string name="gantt_chart">Gantt Chart</string>
     <string name="confirm_delete">Delete?</string>
-    <string name="delete_project_msg">Delete project \'%s\' and all its tasks?</string>
-    <string name="delete_task_msg">Delete task \'%s\'?</string>
+    <string name="back">Back</string>
+    <string name="error_task_name_required">Task name is required</string>
+    <string name="error_start_day">Start day must be at least 1</string>
+    <string name="error_duration">Duration must be at least 1 day</string>
+    <string name="delete_project_msg">Delete project \'%1$s\' and all its tasks?</string>
+    <string name="delete_task_msg">Delete task \'%1$s\'?</string>
 </resources>

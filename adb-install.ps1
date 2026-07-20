@@ -130,7 +130,7 @@ try {
         Write-Warning "No ADB device detected. Connect your Supernote Nomad via USB and enable ADB."
     }
 
-    $appsToProcess = if ($App -eq "all") { @("gantt","classwiz") } else { @($App) }
+    $appsToProcess = if ($App -eq "all") { @("gantt","classwiz","icloud") } else { @($App) }
 
     foreach ($appKey in $appsToProcess) {
         if (-not $AppMap.ContainsKey($appKey)) {

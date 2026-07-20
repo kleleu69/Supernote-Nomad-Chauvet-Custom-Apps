@@ -18,4 +18,5 @@
     <color name="header_text">#FFFFFF</color>
     <color name="row_label_bg">#F0F0F0</color>
     <color name="row_alt_bg">#FAFAFA</color>
+    <color name="header_column_tick">#88FFFFFF</color>
 </resources>

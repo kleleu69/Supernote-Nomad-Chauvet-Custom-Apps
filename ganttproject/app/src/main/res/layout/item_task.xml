@@ -44,6 +44,7 @@
         android:background="@color/gray_dark"
         android:padding="0dp"
         android:stateListAnimator="@null"
+        android:contentDescription="@string/edit_task"
         android:layout_marginLeft="4dp" />
 
     <Button
@@ -56,6 +57,7 @@
         android:background="@color/gray_dark"
         android:padding="0dp"
         android:stateListAnimator="@null"
+        android:contentDescription="@string/delete"
         android:layout_marginLeft="4dp" />
 
 </LinearLayout>
