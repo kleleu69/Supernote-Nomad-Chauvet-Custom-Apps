@@ -27,6 +27,8 @@
     <string name="start_day_hint">1</string>
     <string name="duration_hint">7</string>
     <string name="day_format">Day %1$d</string>
+    <string name="edit_symbol">✎</string>
+    <string name="delete_symbol">✕</string>
     <string name="error_task_name_required">Task name is required</string>
     <string name="error_start_day">Start day must be at least 1</string>
     <string name="error_duration">Duration must be at least 1 day</string>
@@ -35,5 +37,9 @@
     <plurals name="duration_days_short">
         <item quantity="one">%1$dd</item>
         <item quantity="other">%1$dd</item>
+    </plurals>
+    <plurals name="task_count">
+        <item quantity="one">%1$d task</item>
+        <item quantity="other">%1$d tasks</item>
     </plurals>
 </resources>

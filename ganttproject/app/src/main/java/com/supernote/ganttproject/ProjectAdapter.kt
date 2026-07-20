@@ -30,7 +30,7 @@ class ProjectAdapter(
         val project = projects[position]
         holder.tvName.text = project.name
         val count = project.tasks.size
-        holder.tvCount.text = "$count task${if (count == 1) "" else "s"}"
+        holder.tvCount.text = holder.itemView.resources.getQuantityString(R.plurals.task_count, count, count)
         holder.itemView.setOnClickListener { onClick(project) }
         holder.btnDelete.setOnClickListener { onDelete(project) }
     }

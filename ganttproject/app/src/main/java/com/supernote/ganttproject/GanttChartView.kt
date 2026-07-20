@@ -77,9 +77,10 @@ class GanttChartView @JvmOverloads constructor(
     private var totalDays = 30
 
     private fun recalcDimensions() {
-        totalDays = if (tasks.isEmpty()) 30 else {
+        val todayDayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+        totalDays = maxOf(if (tasks.isEmpty()) 30 else {
             tasks.maxOf { it.startDay + it.durationDays - 1 + 5 }.coerceAtLeast(30)
-        }
+        }, todayDayOfYear)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
