@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    CFX-9960GTe  –  Graph Activity Layout
+    Top: equation editors  |  Bottom: graph canvas + toolbar
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/body_bg"
+    tools:context=".GraphActivity">
+
+    <!-- ── Title bar ──────────────────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GRAPH MODE – CFX-9960GTe"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBackToComp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← COMP"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+
+    </LinearLayout>
+
+    <!-- ── Y= Equation editors ─────────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/display_bg"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="40dp" android:layout_height="wrap_content"
+                android:text="Y1=" android:fontFamily="monospace" android:textSize="14sp" android:textColor="@color/black" android:gravity="center_vertical" />
+            <EditText
+                android:id="@+id/etY1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="e.g. sin(X)"
+                android:fontFamily="monospace"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:background="@null"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gray_light" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="40dp" android:layout_height="wrap_content"
+                android:text="Y2=" android:fontFamily="monospace" android:textSize="14sp" android:textColor="@color/black" android:gravity="center_vertical" />
+            <EditText
+                android:id="@+id/etY2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="optional"
+                android:fontFamily="monospace"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:background="@null"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gray_light" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="40dp" android:layout_height="wrap_content"
+                android:text="Y3=" android:fontFamily="monospace" android:textSize="14sp" android:textColor="@color/black" android:gravity="center_vertical" />
+            <EditText
+                android:id="@+id/etY3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="optional"
+                android:fontFamily="monospace"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:background="@null"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Separator -->
+    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="@color/black" />
+
+    <!-- ── Graph canvas ────────────────────────────────────────────────────── -->
+    <com.supernote.cfx9960gt.GraphView
+        android:id="@+id/graphView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+    <!-- ── Trace coordinate readout ───────────────────────────────────────── -->
+    <TextView
+        android:id="@+id/tvTrace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="X=0.000000  Y=0.000000"
+        android:textSize="12sp"
+        android:fontFamily="monospace"
+        android:textColor="@color/black"
+        android:background="@color/display_bg"
+        android:paddingLeft="8dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:visibility="gone" />
+
+    <!-- Separator -->
+    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="@color/black" />
+
+    <!-- ── Toolbar ─────────────────────────────────────────────────────────── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        android:padding="4dp">
+
+        <Button
+            android:id="@+id/btnDraw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DRAW"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_margin="2dp" />
+
+        <Button
+            android:id="@+id/btnTrace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TRACE"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_margin="2dp" />
+
+        <Button
+            android:id="@+id/btnWindow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="V-WIN"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_margin="2dp" />
+
+        <Button
+            android:id="@+id/btnTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TABLE"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:layout_margin="2dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

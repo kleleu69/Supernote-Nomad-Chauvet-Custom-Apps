@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Casio CFX-9960GTe</string>
+    <string name="graph_mode">Graph Mode</string>
+    <string name="comp_mode">COMP</string>
+    <string name="menu_title">MENU</string>
+</resources>
