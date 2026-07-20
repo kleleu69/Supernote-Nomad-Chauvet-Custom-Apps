@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub-style launcher icon: GitHub dark background with white octocat mark -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background: GitHub's brand dark colour -->
+    <path
+        android:pathData="M18,0 L90,0 Q108,0 108,18 L108,90 Q108,108 90,108 L18,108 Q0,108 0,90 L0,18 Q0,0 18,0 Z"
+        android:fillColor="#24292F" />
+
+    <!-- ── Octocat-inspired mark (white on dark) ───────────────────────── -->
+
+    <!-- Head (circle) -->
+    <path
+        android:pathData="M54,44 m-17,0 a17,17 0 1,0 34,0 a17,17 0 1,0 -34,0 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Left ear -->
+    <path
+        android:pathData="M37,42 L41,26 L51,38 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Right ear -->
+    <path
+        android:pathData="M71,42 L67,26 L57,38 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Body / torso connecting head to tentacles -->
+    <path
+        android:pathData="M36,57 Q36,69 54,72 Q72,69 72,57 L72,61 Q72,77 54,79 Q36,77 36,61 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- 5 tentacles -->
+    <!-- Far left -->
+    <path
+        android:pathData="M28,66 Q22,70 22,78 Q22,86 28,88 Q32,88 32,82 Q26,82 26,78 Q26,74 32,74 Z"
+        android:fillColor="#FFFFFF" />
+    <!-- Left -->
+    <path
+        android:pathData="M39,73 Q37,81 36,88 Q38,90 40,88 Q41,82 43,74 Z"
+        android:fillColor="#FFFFFF" />
+    <!-- Centre -->
+    <path
+        android:pathData="M52,75 L52,90 L56,90 L56,75 Z"
+        android:fillColor="#FFFFFF" />
+    <!-- Right -->
+    <path
+        android:pathData="M69,73 Q71,81 72,88 Q70,90 68,88 Q67,82 65,74 Z"
+        android:fillColor="#FFFFFF" />
+    <!-- Far right -->
+    <path
+        android:pathData="M80,66 Q86,70 86,78 Q86,86 80,88 Q76,88 76,82 Q82,82 82,78 Q82,74 76,74 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Eye highlights (two small dots to hint at a face) -->
+    <path
+        android:pathData="M47,42 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z"
+        android:fillColor="#24292F" />
+    <path
+        android:pathData="M55,42 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 Z"
+        android:fillColor="#24292F" />
+
+</vector>

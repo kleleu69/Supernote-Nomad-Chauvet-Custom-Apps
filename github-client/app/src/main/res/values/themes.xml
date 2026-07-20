@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base app theme: e-ink optimised — no animations, high contrast -->
+    <style name="Theme.GitHub" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <!-- Disable all window transitions for e-ink refresh quality -->
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+        <item name="colorPrimary">@color/github_dark</item>
+        <item name="colorPrimaryDark">@color/github_dark</item>
+        <item name="colorAccent">@color/github_gray</item>
+    </style>
+</resources>

@@ -37,6 +37,13 @@ Use one dedicated branch per app track:
       - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
    - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
+6. `feature/supernote-Github`
+   - App module: `github-client/`
+   - Goal: Build and sideload a GitHub mobile client for Supernote Nomad.
+     Wraps `github.com` in an e-ink-optimised WebView with GitHub icon, persistent
+     login, and full access to issues, PRs, notifications, and Copilot cloud agent.
+     No background polling — minimum energy consumption when idle.
+
 ## Release output convention
 
 For each branch, publish signed APK artifacts through the branch CI/release process and keep release notes aligned with Supernote Nomad compatibility constraints.

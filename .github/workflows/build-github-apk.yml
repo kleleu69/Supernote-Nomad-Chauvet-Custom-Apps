@@ -1,0 +1,63 @@
+name: Build GitHub Client APK
+
+on:
+  push:
+    branches: [ "feature/supernote-Github", "copilot/**" ]
+  workflow_dispatch:
+    inputs:
+      create_release:
+        description: 'Create a GitHub Release with the APK'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x github-client/gradlew
+        working-directory: ${{ github.workspace }}
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --no-daemon
+        working-directory: ${{ github.workspace }}/github-client
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-client-debug
+          path: github-client/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: ${{ github.event.inputs.create_release == 'true' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: github-v1.0.${{ github.run_number }}
+          name: GitHub Client v1.0.${{ github.run_number }}
+          body: |
+            GitHub client WebView app for Supernote Nomad (Chauvet OS).
+
+            Provides full GitHub mobile web access including issues, pull requests,
+            notifications, and Copilot cloud agent — optimised for e-ink display.
+
+            **How to sideload:**
+            1. Download `app-debug.apk` below.
+            2. Transfer it to your Supernote Nomad via USB or WiFi.
+            3. On the tablet, enable *Install unknown apps* and open the APK to install.
+            4. Launch **GitHub** from the app drawer and sign in at github.com.
+          files: github-client/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

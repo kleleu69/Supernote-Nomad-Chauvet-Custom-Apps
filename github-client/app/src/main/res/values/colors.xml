@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- E-ink palette: pure black/white with GitHub brand accent -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- GitHub brand colours -->
+    <color name="github_dark">#24292F</color>
+    <color name="github_gray">#57606A</color>
+    <color name="github_border">#D0D7DE</color>
+</resources>
