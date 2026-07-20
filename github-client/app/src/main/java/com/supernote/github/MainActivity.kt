@@ -104,7 +104,11 @@ class MainActivity : AppCompatActivity() {
                         )
                         true
                     }
-                } catch (_: Exception) {
+                } catch (e: android.content.ActivityNotFoundException) {
+                    // No app installed to handle this URL — stay in WebView
+                    false
+                } catch (e: java.net.URISyntaxException) {
+                    // Malformed URL — ignore
                     false
                 }
             }

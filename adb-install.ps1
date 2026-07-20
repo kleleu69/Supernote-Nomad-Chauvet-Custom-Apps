@@ -101,8 +101,10 @@ foreach ($name in $targets) {
         $ks = "$env:USERPROFILE\.android\debug.keystore"
         if (Test-Path $ks) {
             Write-Host "  Signing with debug keystore..." -ForegroundColor Gray
-            & zipalign -f 4 $apkAbs $aligned 2>&1 | Out-Null
-            & apksigner sign --ks $ks --ks-pass pass:android --key-pass pass:android --out $signed $aligned 2>&1 | Out-Null
+            & zipalign -f 4 $apkAbs $aligned
+            if ($LASTEXITCODE -ne 0) { throw "zipalign failed for $name (exit $LASTEXITCODE)" }
+            & apksigner sign --ks $ks --ks-pass pass:android --key-pass pass:android --out $signed $aligned
+            if ($LASTEXITCODE -ne 0) { throw "apksigner failed for $name (exit $LASTEXITCODE)" }
             $apkAbs = $signed
         }
     }
