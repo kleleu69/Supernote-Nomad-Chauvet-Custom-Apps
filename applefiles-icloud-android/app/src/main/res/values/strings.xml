@@ -11,7 +11,7 @@
     <string name="apple_login_cancelled">Apple login cancelled</string>
     <string name="refresh">Refresh</string>
     <string name="sync_target_info">Sync target path</string>
-    <string name="sync_target_path">/storage/emulated/0/Document/iCloud</string>
+    <string name="sync_target_path">Sync target: /storage/emulated/0/Document/iCloud (Supernote internal)</string>
     <string name="sync_download_started">Sync download started: %1$s</string>
     <string name="sync_download_completed">Synced to Document/iCloud: %1$s</string>
     <string name="sync_download_failed">Sync failed: %1$s</string>
