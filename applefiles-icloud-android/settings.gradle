@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "iCloud-Android"
+rootProject.name = "Supernote-Apple-Books"
 include ':app' 
