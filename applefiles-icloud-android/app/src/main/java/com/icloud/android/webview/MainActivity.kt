@@ -272,6 +272,7 @@ class MainActivity : AppCompatActivity() {
                         input.copyTo(output)
                     }
                 }
+                Unit
             } finally {
                 connection.disconnect()
             }
