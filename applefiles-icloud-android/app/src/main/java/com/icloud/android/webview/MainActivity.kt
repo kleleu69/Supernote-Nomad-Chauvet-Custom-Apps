@@ -1,13 +1,13 @@
 package com.icloud.android.webview
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
@@ -40,7 +40,12 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
 
     private val iCloudUrl = "https://www.icloud.com/iclouddrive/"
     private val legacyWritePermissionRequestCode = 2001
+    private val manageStorageRequestCode = 2002
     private var pendingDownload: PendingDownload? = null
+
+    /** Supernote Chauvet internal sync folder */
+    private val syncFolderPath: String
+        get() = Environment.getExternalStorageDirectory().absolutePath + "/Document/iCloud"
 
     private data class PendingDownload(
         val url: String,
@@ -58,6 +63,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         setSupportActionBar(binding.toolbar)
 
         appleAuthHandler = AppleAuthHandler(this)
+        ensureStorageAccess()
         setupWebView()
         setupSwipeRefresh()
         handleIntent(intent)
@@ -110,12 +116,8 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
             if (url.isNullOrBlank()) return@setDownloadListener
 
             pendingDownload = PendingDownload(url, userAgent, contentDisposition, mimeType)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && !hasLegacyWritePermission()) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    legacyWritePermissionRequestCode
-                )
+            if (!hasStorageAccess()) {
+                requestStorageAccess()
                 return@setDownloadListener
             }
 
@@ -173,6 +175,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         if (requestCode != legacyWritePermissionRequestCode) return
 
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            ensureSyncFolderExists()
             pendingDownload?.let {
                 startSyncDownload(it.url, it.userAgent, it.contentDisposition, it.mimeType)
             }
@@ -181,11 +184,61 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         }
     }
 
-    private fun hasLegacyWritePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == manageStorageRequestCode) {
+            if (hasStorageAccess()) {
+                ensureSyncFolderExists()
+                pendingDownload?.let {
+                    startSyncDownload(it.url, it.userAgent, it.contentDisposition, it.mimeType)
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.sync_permission_needed), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun ensureStorageAccess() {
+        if (!hasStorageAccess()) {
+            requestStorageAccess()
+        } else {
+            ensureSyncFolderExists()
+        }
+    }
+
+    private fun ensureSyncFolderExists() {
+        val syncDir = File(syncFolderPath)
+        if (!syncDir.exists()) {
+            syncDir.mkdirs()
+        }
+    }
+
+    private fun hasStorageAccess(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun requestStorageAccess() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                this.data = Uri.fromParts("package", packageName, null)
+            }
+            @Suppress("DEPRECATION")
+            startActivityForResult(intent, manageStorageRequestCode)
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                legacyWritePermissionRequestCode
+            )
+        }
     }
 
     private fun startSyncDownload(
@@ -245,60 +298,20 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
                     throw IOException("HTTP ${connection.responseCode}")
                 }
 
-                val resolvedMimeType = mimeType
-                    ?.takeIf { it.isNotBlank() }
-                    ?: connection.contentType?.substringBefore(";")
-                    ?: "application/octet-stream"
-
                 connection.inputStream.use { input ->
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        saveWithMediaStore(input, fileName, resolvedMimeType)
-                    } else {
-                        saveWithLegacyStorage(input, fileName)
+                    val targetDir = File(syncFolderPath)
+                    if (!targetDir.exists() && !targetDir.mkdirs()) {
+                        throw IOException("Failed to create sync folder: $syncFolderPath")
+                    }
+
+                    val targetFile = File(targetDir, fileName)
+                    FileOutputStream(targetFile).use { output ->
+                        input.copyTo(output)
                     }
                 }
             } finally {
                 connection.disconnect()
             }
-        }
-    }
-
-    private fun saveWithMediaStore(input: java.io.InputStream, fileName: String, mimeType: String) {
-        val values = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Document/iCloud/")
-            put(MediaStore.MediaColumns.IS_PENDING, 1)
-        }
-
-        val resolver = contentResolver
-        val collection = MediaStore.Files.getContentUri("external")
-        val uri = resolver.insert(collection, values)
-            ?: throw IOException("Failed to create destination file")
-
-        try {
-            resolver.openOutputStream(uri)?.use { output ->
-                input.copyTo(output)
-            } ?: throw IOException("Failed to open destination output stream")
-
-            values.clear()
-            values.put(MediaStore.MediaColumns.IS_PENDING, 0)
-            resolver.update(uri, values, null, null)
-        } catch (e: Exception) {
-            resolver.delete(uri, null, null)
-            throw e
-        }
-    }
-
-    private fun saveWithLegacyStorage(input: java.io.InputStream, fileName: String) {
-        val targetDir = File(Environment.getExternalStorageDirectory(), "Document/iCloud")
-        if (!targetDir.exists() && !targetDir.mkdirs()) {
-            throw IOException("Failed to create sync folder")
-        }
-
-        val targetFile = File(targetDir, fileName)
-        FileOutputStream(targetFile).use { output ->
-            input.copyTo(output)
         }
     }
 }

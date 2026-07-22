@@ -77,7 +77,7 @@ class AppleAuthHandler(private val context: Context) {
                 .appendQueryParameter("response_type", "code")
                 .appendQueryParameter("state", authState)
                 .appendQueryParameter("scope", scope)
-                .appendQueryParameter("response_mode", "form_post")
+                .appendQueryParameter("response_mode", "query")
             
             val authUrl = authUrlBuilder.build().toString()
             
@@ -144,19 +144,17 @@ class AppleAuthHandler(private val context: Context) {
      * @param code 授权码
      */
     fun completeLogin(webView: WebView, code: String) {
-        // 在WebView中设置授权码Cookie
+        val sanitizedCode = code.replace("\\", "\\\\").replace("'", "\\'")
         val script = """
             (function() {
-                // 设置认证Cookie或localStorage数据
                 try {
-                    localStorage.setItem('apple_auth_code', '$code');
-                    
-                    // 触发自定义事件通知页面处理登录
-                    const event = new CustomEvent('appleAuthComplete', { 
-                        detail: { code: '$code' } 
+                    localStorage.setItem('apple_auth_code', '$sanitizedCode');
+
+                    const event = new CustomEvent('appleAuthComplete', {
+                        detail: { code: '$sanitizedCode' }
                     });
                     document.dispatchEvent(event);
-                    
+
                     return true;
                 } catch(e) {
                     console.error('Error setting authorization data:', e);
