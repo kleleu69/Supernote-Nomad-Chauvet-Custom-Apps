@@ -175,6 +175,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         if (requestCode != legacyWritePermissionRequestCode) return
 
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            ensureSyncFolderExists()
             pendingDownload?.let {
                 startSyncDownload(it.url, it.userAgent, it.contentDisposition, it.mimeType)
             }
@@ -188,6 +189,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == manageStorageRequestCode) {
             if (hasStorageAccess()) {
+                ensureSyncFolderExists()
                 pendingDownload?.let {
                     startSyncDownload(it.url, it.userAgent, it.contentDisposition, it.mimeType)
                 }
@@ -200,10 +202,14 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
     private fun ensureStorageAccess() {
         if (!hasStorageAccess()) {
             requestStorageAccess()
+        } else {
+            ensureSyncFolderExists()
         }
-        // Pre-create sync folder
+    }
+
+    private fun ensureSyncFolderExists() {
         val syncDir = File(syncFolderPath)
-        if (hasStorageAccess() && !syncDir.exists()) {
+        if (!syncDir.exists()) {
             syncDir.mkdirs()
         }
     }

@@ -144,7 +144,7 @@ class AppleAuthHandler(private val context: Context) {
      * @param code 授权码
      */
     fun completeLogin(webView: WebView, code: String) {
-        val sanitizedCode = code.replace("'", "\\'").replace("\\", "\\\\")
+        val sanitizedCode = code.replace("\\", "\\\\").replace("'", "\\'")
         val script = """
             (function() {
                 try {
