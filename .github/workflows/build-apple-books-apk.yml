@@ -2,11 +2,14 @@ name: Build Apple Books APK
 
 on:
   push:
-    branches: [ "main", "copilot/**", "feature/supernote-AppleBooks" ]
+    branches: [ "main", "copilot/**", "feature/supernote-apple-books" ]
     paths:
       - "applefiles-icloud-android/**"
       - ".github/workflows/build-apple-books-apk.yml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:

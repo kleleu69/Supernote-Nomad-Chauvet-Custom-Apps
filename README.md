@@ -41,7 +41,7 @@ Use one dedicated branch per app track:
    - Upstream base: None (repo-local implementation).
    - Goal: Build and sideload a standalone offline scientific calculator app for Supernote Nomad.
 
-7. `feature/supernote-AppleBooks`
+7. `feature/supernote-apple-books`
    - Upstream base:
       - <https://books.apple.com/>
    - Goal: Build and sideload an Apple Books web app wrapper for Supernote Nomad.
