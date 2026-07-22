@@ -207,8 +207,8 @@ class MainActivity : AppCompatActivity() {
             val btn = Button(this).apply {
                 isAllCaps = false
                 typeface  = Typeface.MONOSPACE
-                setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11f)
-                setPadding(0, 0, 0, 0)
+                setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 18f)
+                setPadding(4, 8, 4, 8)
             }
 
             val params = GridLayout.LayoutParams().apply {
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
                 rowSpec    = GridLayout.spec(row, 1, 1f)
                 width  = 0
                 height = 0
-                setMargins(1, 1, 1, 1)
+                setMargins(2, 2, 2, 2)
             }
             btn.layoutParams = params
 
@@ -226,24 +226,24 @@ class MainActivity : AppCompatActivity() {
                 return@forEachIndexed
             }
 
-            // Style based on key type
+            // Style based on key type (Heritage aesthetic: green/blue/red palette)
             val bgColor: Int
             val textColor: Int
             when {
                 keyDef.label == "EXE" -> {
-                    bgColor   = Color.parseColor("#000000")
+                    bgColor   = Color.parseColor("#9B2C2C")  // Heritage red
                     textColor = Color.WHITE
                 }
                 keyDef.label in listOf("SHIFT", "ALPHA", "AC") -> {
-                    bgColor   = Color.parseColor("#333333")
+                    bgColor   = Color.parseColor("#1F4B3D")  // Heritage green
                     textColor = Color.WHITE
                 }
                 keyDef.label.startsWith("F") && keyDef.label.length == 2 -> {
-                    bgColor   = Color.parseColor("#1A1A1A")
+                    bgColor   = Color.parseColor("#1F4B3D")  // Heritage green
                     textColor = Color.WHITE
                 }
                 keyDef.label in listOf("÷", "×", "+", "-") -> {
-                    bgColor   = Color.parseColor("#1A1A1A")
+                    bgColor   = Color.parseColor("#2D5A9C")  // Heritage blue
                     textColor = Color.WHITE
                 }
                 keyDef.label.isNotEmpty() && keyDef.label[0].isDigit() || keyDef.label == "." || keyDef.label == "," -> {
@@ -251,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                     textColor = Color.BLACK
                 }
                 else -> {
-                    bgColor   = Color.parseColor("#EEEEEE")
+                    bgColor   = Color.parseColor("#D4CFC0")  // Heritage beige
                     textColor = Color.BLACK
                 }
             }
@@ -260,7 +260,7 @@ class MainActivity : AppCompatActivity() {
                 shape = GradientDrawable.RECTANGLE
                 setColor(bgColor)
                 setStroke(1, Color.BLACK)
-                cornerRadius = 3f
+                cornerRadius = 8f
             }
             btn.background = bg
             btn.setTextColor(textColor)
