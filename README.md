@@ -28,8 +28,8 @@ Use one dedicated branch per app track:
    - Goal: Build and sideload an Apple files app for Supernote Nomad.
 
 4. `feature/supernote-ClassWizCalculator`
-   - Upstream bases:
-      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
+   - Upstream base:
+     - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
    - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
   
 5. `feature/Casio-fx-Calc-app`
