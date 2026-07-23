@@ -30,21 +30,14 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
    - Upstream base: <https://github.com/plateaukao/einkbro.git>
    - Goal: Build einkbro app.
 
-3. `feature/supernote-Applefiles`
-   - Upstream bases:
-     - <https://github.com/Chieko-Seren/iCloud-Android.git>
-     - <https://github.com/asahiqin/icloud_for_android.git>
-   - Goal: Build and sideload an Apple files app for Supernote Nomad.
+3. `feature/supernote-Apple-Books`
+   - Goal: Build Apple Books app.
 
-4. `feature/supernote-ClassWizCalculator`
-   - Upstream base:
-     - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
-   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
+4. `feature/supernote-iCloud-Drive`
+  - Goal: Build iCloud Drive feature based on supernote NetVirtualDisk app and feature for tunneling with Apple iCloud, and a download/upload feature between iCloud Drive feature and supernote INBOX folder.960GTe app.
 
-5. `feature/Casio-fx-Calc-app`
-   - Upstream base:
-     - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
-   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
+5. `feature/supernote-cfx9960GTe`
+  - Goal: Build Casio CFX9960GTe app.
 
 6. `feature/supernote-Github`
    - App module: `github-client/`
