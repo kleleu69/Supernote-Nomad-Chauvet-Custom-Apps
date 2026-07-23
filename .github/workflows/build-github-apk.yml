@@ -3,6 +3,9 @@ name: Build GitHub Client APK
 on:
   push:
     branches: [ "feature/supernote-Github", "copilot/**" ]
+    paths:
+      - "github-client/**"
+      - ".github/workflows/build-github-apk.yml"
   workflow_dispatch:
     inputs:
       create_release:
