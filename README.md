@@ -2,12 +2,12 @@
 
 ## Chauvet OS base (main branch)
 
-This repository now tracks the Chauvet OS foundation work from:
+This repository tracks the Chauvet OS foundation work from:
 
 - Supernote firmware package: <https://download-firmware.supernote.com/694655/update.zip>
 - Reference reverse-engineering/dev base: <https://github.com/dwongdev/sugoi-supernote.git>
 
-The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and integration points used by all custom apps.
+The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and common codes used to build and implement all custom apps.
 
 ## Apps in this repo
 
@@ -24,11 +24,11 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
 
 1. `feature/supernote-ganttproject`
    - Upstream base: <https://github.com/bardsoftware/ganttproject.git>
-   - Goal: Build and sideload a GanttProject app for Supernote Nomad.
+   - Goal: Build GanttProject app.
 
 2. `feature/supernote-einkbro`
    - Upstream base: <https://github.com/plateaukao/einkbro.git>
-   - Goal: Build and sideload a einkbro app for Supernote Nomad compatible APK release.
+   - Goal: Build einkbro app.
 
 3. `feature/supernote-Applefiles`
    - Upstream bases:
@@ -36,28 +36,14 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
      - <https://github.com/asahiqin/icloud_for_android.git>
    - Goal: Build and sideload an Apple files app for Supernote Nomad.
 
-4. `feature/supernote-ClassWizCalculator`
-   - Upstream bases:
-      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
-   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
-
-5. `feature/Casio-fx-Calc-app`
+4. `feature/Casio-fx-Calc-app`
    - Upstream bases:
       - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
-   - Goal: Build and sideload a Casio fx Calculator app for Supernote Nomad.
-
-6. `offline-casio-clone` (standalone local app project)
-   - Upstream base: None (repo-local implementation).
-   - Goal: Build and sideload a standalone offline scientific calculator app for Supernote Nomad.
-
-7. `feature/supernote-apple-books`
-   - Upstream base:
-      - <https://books.apple.com/>
-   - Goal: Build and sideload an Apple Books web app wrapper for Supernote Nomad.
+   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
 6. `feature/supernote-Github`
    - App module: `github-client/`
-   - Goal: Build and sideload a GitHub mobile client for Supernote Nomad.
+   - Goal: Build GitHub mobile client for Supernote Nomad.
      Wraps `github.com` in an e-ink-optimised WebView with GitHub icon, persistent
      login, and full access to issues, PRs, notifications, and Copilot cloud agent.
      No background polling — minimum energy consumption when idle.
