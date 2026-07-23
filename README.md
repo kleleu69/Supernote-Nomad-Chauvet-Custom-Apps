@@ -77,3 +77,9 @@ Skip build and install an already-built APK variant:
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant debug -Build false
 
 ```
+
+## iCloud Drive browser app
+
+The Android app is now the primary path: it opens iCloud Drive directly in the Supernote browser shell and keeps the authenticated session in the app itself.
+
+There is no longer a PC-side sync bridge in this repository.

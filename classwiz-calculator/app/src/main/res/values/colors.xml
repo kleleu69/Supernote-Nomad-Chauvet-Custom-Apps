@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_dark">#333333</color>
+    <color name="gray_mid">#666666</color>
+    <color name="gray_light">#CCCCCC</color>
+
+    <color name="shell_outer">#9CAAB3</color>
+    <color name="shell_inner">#AEBBC4</color>
+    <color name="shell_bezel">#7D8A95</color>
+    <color name="display_bg">#B8C6A2</color>
+    <color name="display_text">#1E2A21</color>
+    <color name="display_result_text">#172018</color>
+    <color name="display_border">#5D6972</color>
+
+    <color name="btn_number_bg">#D7DEE6</color>
+    <color name="btn_number_text">#1E2630</color>
+    <color name="btn_func_bg">#404C59</color>
+    <color name="btn_func_text">#F2F5FA</color>
+    <color name="btn_shift_bg">#EFA245</color>
+    <color name="btn_shift_text">#201A13</color>
+    <color name="btn_shift_active_bg">#FFF1D9</color>
+    <color name="btn_shift_active_text">#3B2E1D</color>
+    <color name="btn_alpha_bg">#B54A54</color>
+    <color name="btn_alpha_text">#FFF5F5</color>
+    <color name="btn_alpha_active_bg">#FFD9DE</color>
+    <color name="btn_alpha_active_text">#472427</color>
+    <color name="btn_equal_bg">#3968B6</color>
+    <color name="btn_equal_text">#FFFFFF</color>
+    <color name="btn_ac_bg">#5A6472</color>
+    <color name="btn_ac_text">#FFFFFF</color>
+    <color name="btn_soft_bg">#7AA070</color>
+    <color name="btn_soft_text">#F9FFF5</color>
+</resources>

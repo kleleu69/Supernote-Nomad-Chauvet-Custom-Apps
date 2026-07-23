@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/shell_outer"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/shell_inner"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CASIO   Supernote Heritage"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:id="@+id/displayPanel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.30"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:background="@color/shell_bezel"
+            android:padding="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/display_bg"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvShiftIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SHIFT"
+                        android:textSize="10sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_text"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:paddingRight="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvAlphaIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ALPHA"
+                        android:textSize="10sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_text"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:paddingRight="6dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvAngleMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DEG"
+                        android:textSize="10sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_text"
+                        android:textStyle="bold"
+                        android:paddingLeft="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvMemIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M"
+                        android:textSize="10sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_text"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:paddingLeft="8dp" />
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/exprScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:fillViewport="false">
+
+                    <TextView
+                        android:id="@+id/tvExpr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textSize="19sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_text"
+                        android:gravity="center_vertical|end"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp" />
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:fillViewport="false">
+
+                    <TextView
+                        android:id="@+id/tvResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/display_result_text"
+                        android:textStyle="bold"
+                        android:gravity="end"
+                        android:paddingTop="2dp" />
+                </HorizontalScrollView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F1" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F2" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F3" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F4" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F5" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+            <TextView android:layout_width="0dp" android:layout_height="20dp" android:layout_weight="1" android:gravity="center" android:text="F6" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/btn_soft_text" android:background="@color/btn_soft_bg" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/buttonGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.70"
+            android:layout_marginTop="6dp"
+            android:columnCount="6"
+            android:rowCount="9"
+            android:useDefaultMargins="false" />
+    </LinearLayout>
+</LinearLayout>
