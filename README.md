@@ -2,40 +2,49 @@
 
 ## Chauvet OS base (main branch)
 
-This repository now tracks the Chauvet OS foundation work from:
+This repository tracks the Chauvet OS foundation work from:
 
 - Supernote firmware package: <https://download-firmware.supernote.com/694655/update.zip>
 - Reference reverse-engineering/dev base: <https://github.com/dwongdev/sugoi-supernote.git>
 
-The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and integration points used by all custom apps.
+The main branch is intended to host shared Supernote Nomad platform notes, extraction findings, and common codes used to build and implement all custom apps.
 
-## App development branches and APK release targets
+## Apps in this repo
 
-Use one dedicated branch per app track:
+| App | Folder | Branch | CI |
+|---|---|---|---|
+| ClassWiz Calculator | `classwiz-calculator/` | `feature/supernote-ClassWizCalculator` | `build-apk.yml` |
+| Casio CFX-9960GTe | `cfx9960gt-calculator/` | `feature/supernote-cfx9960gt` | `build-cfx9960gt.yml` |
+
+Each app has its own dedicated folder, branch, and CI workflow so changes can be reviewed independently.
+
+## Other app development branches
+
+Additional app tracks (no code in this repo yet — sideload APKs directly):
 
 1. `feature/supernote-ganttproject`
    - Upstream base: <https://github.com/bardsoftware/ganttproject.git>
-   - Goal: Build and sideload a GanttProject app for Supernote Nomad.
+   - Goal: Build GanttProject app.
 
 2. `feature/supernote-einkbro`
    - Upstream base: <https://github.com/plateaukao/einkbro.git>
-   - Goal: Build and sideload a einkbro app for Supernote Nomad compatible APK release.
+   - Goal: Build einkbro app.
 
-3. `feature/supernote-Applefiles`
-   - Upstream bases:
-     - <https://github.com/Chieko-Seren/iCloud-Android.git>
-     - <https://github.com/asahiqin/icloud_for_android.git>
-   - Goal: Build and sideload an Apple files app for Supernote Nomad.
+3. `feature/supernote-Apple-Books`
+   - Goal: Build Apple Books app.
 
-4. `feature/supernote-ClassWizCalculator`
-   - Upstream bases:
-      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
-   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
-  
-5. `feature/Casio-fx-Calc-app`
-   - Upstream bases:
-      - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
-   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
+4. `feature/supernote-iCloud-Drive`
+  - Goal: Build iCloud Drive feature based on supernote NetVirtualDisk app and feature for tunneling with Apple iCloud, and a download/upload feature between iCloud Drive feature and supernote INBOX folder.960GTe app.
+
+5. `feature/supernote-cfx9960GTe`
+  - Goal: Build Casio CFX9960GTe app.
+
+6. `feature/supernote-Github`
+   - App module: `github-client/`
+   - Goal: Build GitHub mobile client for Supernote Nomad.
+     Wraps `github.com` in an e-ink-optimised WebView with GitHub icon, persistent
+     login, and full access to issues, PRs, notifications, and Copilot cloud agent.
+     No background polling — minimum energy consumption when idle.
 
 ## Release output convention
 
@@ -47,22 +56,16 @@ Use `adb-install.ps1` to build and install apps to a connected Supernote (or any
 
 ### Examples
 
-Install iCloud debug build (default):
+Install ClassWiz debug build:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App classwiz -Variant debug
 ```
 
-Install Gantt debug build:
+Install CFX-9960GT debug build:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App gantt -Variant debug
-```
-
-Install iCloud release build (auto-signs unsigned release APK using debug keystore):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant release
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App cfx9960gt -Variant debug
 ```
 
 Install all supported apps:
@@ -74,6 +77,11 @@ powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App all -Variant deb
 Skip build and install an already-built APK variant:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App icloud -Variant debug -Build false
-
+powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App classwiz -Variant debug -Build false
 ```
+
+## iCloud Drive browser app
+
+The Android app is now the primary path: it opens iCloud Drive directly in the Supernote browser shell and keeps the authenticated session in the app itself.
+
+There is no longer a PC-side sync bridge in this repository.
