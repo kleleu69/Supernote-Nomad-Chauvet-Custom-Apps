@@ -36,10 +36,24 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
      - <https://github.com/asahiqin/icloud_for_android.git>
    - Goal: Build and sideload an Apple files app for Supernote Nomad.
 
-4. `feature/Casio-fx-Calc-app`
+4. `feature/supernote-ClassWizCalculator`
+   - Upstream bases:
+      - <https://apkpure.net/classwiz-calc-app/jp.co.casio.fx.ClassWizCalcApp/download>
+   - Goal: Build and sideload a ClassWizCalc app for Supernote Nomad.
+
+5. `feature/Casio-fx-Calc-app`
    - Upstream bases:
       - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
-   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
+   - Goal: Build and sideload a Casio fx Calculator app for Supernote Nomad.
+
+6. `offline-casio-clone` (standalone local app project)
+   - Upstream base: None (repo-local implementation).
+   - Goal: Build and sideload a standalone offline scientific calculator app for Supernote Nomad.
+
+7. `feature/supernote-apple-books`
+   - Upstream base:
+      - <https://books.apple.com/>
+   - Goal: Build and sideload an Apple Books web app wrapper for Supernote Nomad.
 
 6. `feature/supernote-Github`
    - App module: `github-client/`
@@ -81,3 +95,9 @@ Skip build and install an already-built APK variant:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App classwiz -Variant debug -Build false
 ```
+
+## iCloud Drive browser app
+
+The Android app is now the primary path: it opens iCloud Drive directly in the Supernote browser shell and keeps the authenticated session in the app itself.
+
+There is no longer a PC-side sync bridge in this repository.
