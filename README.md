@@ -30,18 +30,16 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
    - Upstream base: <https://github.com/plateaukao/einkbro.git>
    - Goal: Build einkbro app.
 
-3. `feature/supernote-iCloud Drive`
-   - Sources internal to Supernote:
-      - Mail app for Download/Upload feature
-      - NetVirtualDisk for tunneling queries and UI
-   - Goal: Build iCloud Drive app.
-   - The iCloud DOwnload/upload feature shall be tunnel with Supernote INBOX Folder
-  
-5. `feature/supernote-AppleBooks`
-   - Goal: Build Apple Books app.
+3. `feature/supernote-Applefiles`
+   - Upstream bases:
+     - <https://github.com/Chieko-Seren/iCloud-Android.git>
+     - <https://github.com/asahiqin/icloud_for_android.git>
+   - Goal: Build and sideload an Apple files app for Supernote Nomad.
 
-4. `feature/Casio Cfx9960GTe`
-   - Goal: Build Casio Cfx9960GT app.
+4. `feature/Casio-fx-Calc-app`
+   - Upstream bases:
+      - <https://apkpure.com/casio-fx-calculator/jp.co.casio.fx.casiofxcalculator/download>
+   - Goal: Build and sideload a casio-fx-calculator app for Supernote Nomad.
 
 6. `feature/supernote-Github`
    - App module: `github-client/`
@@ -83,3 +81,9 @@ Skip build and install an already-built APK variant:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\adb-install.ps1 -App classwiz -Variant debug -Build false
 ```
+
+## iCloud Drive browser app
+
+The Android app is now the primary path: it opens iCloud Drive directly in the Supernote browser shell and keeps the authenticated session in the app itself.
+
+There is no longer a PC-side sync bridge in this repository.
