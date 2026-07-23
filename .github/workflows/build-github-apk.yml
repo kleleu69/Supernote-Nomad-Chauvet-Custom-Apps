@@ -1,15 +1,8 @@
-name: Build ClassWiz Calculator APK
+name: Build GitHub Client APK
 
 on:
   push:
-    branches: [ "main", "feature/supernote-ClassWizCalculator", "copilot/**" ]
-    paths:
-      - 'classwiz-calculator/**'
-      - '.github/workflows/build-apk.yml'
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'classwiz-calculator/**'
+    branches: [ "feature/supernote-Github", "copilot/**" ]
   workflow_dispatch:
     inputs:
       create_release:
@@ -20,8 +13,10 @@ on:
 
 jobs:
   build:
-    name: Build ClassWiz Debug APK
+    name: Build Debug APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -34,33 +29,37 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x classwiz-calculator/gradlew
+        run: chmod +x github-client/gradlew
         working-directory: ${{ github.workspace }}
 
       - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon
-        working-directory: ${{ github.workspace }}/classwiz-calculator
+        working-directory: ${{ github.workspace }}/github-client
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: classwiz-calculator-debug
-          path: classwiz-calculator/app/build/outputs/apk/debug/app-debug.apk
+          name: github-client-debug
+          path: github-client/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
 
       - name: Create GitHub Release
         if: ${{ github.event.inputs.create_release == 'true' }}
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: ClassWiz Calculator v1.0.${{ github.run_number }}
+          tag_name: github-v1.0.${{ github.run_number }}
+          name: GitHub Client v1.0.${{ github.run_number }}
           body: |
-            ClassWiz-inspired calculator for Supernote Nomad (Chauvet OS).
+            GitHub client WebView app for Supernote Nomad (Chauvet OS).
+
+            Provides full GitHub mobile web access including issues, pull requests,
+            notifications, and Copilot cloud agent — optimised for e-ink display.
 
             **How to sideload:**
             1. Download `app-debug.apk` below.
             2. Transfer it to your Supernote Nomad via USB or WiFi.
             3. On the tablet, enable *Install unknown apps* and open the APK to install.
-          files: classwiz-calculator/app/build/outputs/apk/debug/app-debug.apk
+            4. Launch **GitHub** from the app drawer and sign in at github.com.
+          files: github-client/app/build/outputs/apk/debug/app-debug.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

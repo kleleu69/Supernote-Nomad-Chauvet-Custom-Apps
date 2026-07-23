@@ -270,6 +270,7 @@ class MainActivity : AppCompatActivity() {
                     val targetFile = File(targetDir, fileName)
                     FileOutputStream(targetFile).use { output ->
                         input.copyTo(output)
+                        Unit
                     }
                 }
             } finally {
