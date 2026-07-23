@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ── Base ──────────────────────────────────────────────────────────── -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_dark">#333333</color>
+    <color name="gray_mid">#666666</color>
+    <color name="gray_light">#CCCCCC</color>
+
+    <!-- ── Calculator body ────────────────────────────────────────────────── -->
+    <!-- Dark navy body (matches real CFX-9860 / CFX-9960 series) -->
+    <color name="body_bg">#1C2040</color>
+
+    <!-- ── Display ────────────────────────────────────────────────────────── -->
+    <!-- E-ink–safe: pure white background, black text -->
+    <color name="display_bg">#FFFFFF</color>
+    <color name="display_text">#000000</color>
+    <color name="display_border">#000000</color>
+
+    <!-- ── F-key label bar ────────────────────────────────────────────────── -->
+    <color name="fkey_bg">#000000</color>
+    <color name="fkey_text">#FFFFFF</color>
+
+    <!-- ── Key category backgrounds ──────────────────────────────────────── -->
+    <color name="key_number_bg">#FFFFFF</color>
+    <color name="key_number_text">#000000</color>
+    <color name="key_func_bg">#EEEEEE</color>
+    <color name="key_func_text">#000000</color>
+    <color name="key_operator_bg">#1A1A1A</color>
+    <color name="key_operator_text">#FFFFFF</color>
+    <color name="key_shift_bg">#333333</color>
+    <color name="key_shift_text">#FFFFFF</color>
+    <color name="key_exe_bg">#000000</color>
+    <color name="key_exe_text">#FFFFFF</color>
+
+    <!-- ── Modifier indicators on display ────────────────────────────────── -->
+    <!-- E-ink–compatible: bold black; on color screen these are orange/red -->
+    <color name="indicator_shift">#000000</color>
+    <color name="indicator_alpha">#000000</color>
+</resources>

@@ -1,65 +1,33 @@
-# iCloud for Android
+# Apple Books for Supernote Nomad
 
-Access your iCloud content directly from your Android device.
+WebView-based Apple Books launcher app for Supernote Nomad (Chauvet OS), ready for sideloaded APK installation.
 
 ## Features
 
-- Access iCloud Mail, Calendar, Photos, and more
-- Seamless synchronization with your Apple devices
-- User-friendly interface
-- File downloads with a built-in download manager
-- Support for various file types (PDF, Office documents, etc.)
-- Apple third-party login support
+- Opens Apple Books directly: `https://books.apple.com/`
+- E-ink friendly simple UI with toolbar + pull-to-refresh
+- Download support to Supernote internal folder: `/storage/emulated/0/Document/AppleBooks`
 
-## Permissions
+## Build debug APK
 
-This app requires the following permissions:
+```bash
+cd applefiles-icloud-android
+./gradlew assembleDebug --no-daemon
+```
 
-- `INTERNET`: To access iCloud services
-- `ACCESS_NETWORK_STATE`: To monitor network connectivity
-- `POST_NOTIFICATIONS`: To display mail and download notifications
-- `RECEIVE_BOOT_COMPLETED`: To start services when device boots
-- `WRITE_EXTERNAL_STORAGE`: To save downloaded files (Android 9 and below)
+APK output:
 
-## Getting Started
+`app/build/outputs/apk/debug/app-debug.apk`
 
-### Prerequisites
+## Sideload on Supernote Nomad
 
-- Android Studio
-- Android SDK
-- JDK 11 or higher
-
-### Installation
-
-1. Clone this repository
+1. Enable unknown app installs on the device.
+2. Transfer APK to the device (USB or ADB), for example:
    ```bash
-   git clone https://github.com/Chieko-Seren/iCloud-Android.git
+   adb push app/build/outputs/apk/debug/app-debug.apk /sdcard/Download/
    ```
-2. Open the project in Android Studio
-3. Build and run the app on your device
-
-## Using the Download Manager
-
-1. Tap on any downloadable file link (PDF, documents, etc.)
-2. The app will automatically start downloading the file
-3. Access all your downloads by tapping the download icon in the toolbar
-4. From the Download Manager, you can:
-   - Track download progress
-   - Open completed downloads
-   - Cancel ongoing downloads
-   - Remove downloaded files
-
-## Apple Third-Party Login
-
-1. When you see an "Sign in with Apple" button in iCloud, the app will automatically detect it
-2. Tapping the button will open an external browser window for secure authentication
-3. After successful authentication, you'll be redirected back to the app
-4. Your authentication will be securely stored for future sessions
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit issues and pull requests.
+3. Open the APK from the file manager and install.
 
 ## License
 
-This project is licensed under the GPL-3.0 License - see the LICENSE file for details. 
+This project is licensed under the GPL-3.0 License - see the LICENSE file for details.

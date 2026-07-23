@@ -1,8 +1,15 @@
-name: Build & Release APK
+name: Build ClassWiz Calculator APK
 
 on:
   push:
-    branches: [ "main", "copilot/**" ]
+    branches: [ "main", "feature/supernote-ClassWizCalculator", "copilot/**" ]
+    paths:
+      - 'classwiz-calculator/**'
+      - '.github/workflows/build-apk.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'classwiz-calculator/**'
   workflow_dispatch:
     inputs:
       create_release:
@@ -13,7 +20,7 @@ on:
 
 jobs:
   build:
-    name: Build Debug APK
+    name: Build ClassWiz Debug APK
     runs-on: ubuntu-latest
 
     steps:

@@ -17,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.icloud.android.webview.auth.AppleAuthHandler
-import com.icloud.android.webview.auth.AppleAuthResult
 import com.icloud.android.webview.databinding.ActivityMainBinding
 import com.icloud.android.webview.webview.ICloudWebChromeClient
 import com.icloud.android.webview.webview.ICloudWebClient
@@ -32,20 +30,19 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
-class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var jsInterface: JavaScriptInterface
-    private lateinit var appleAuthHandler: AppleAuthHandler
 
-    private val iCloudUrl = "https://www.icloud.com/iclouddrive/"
+    private val appleBooksUrl = "https://books.apple.com/"
     private val legacyWritePermissionRequestCode = 2001
     private val manageStorageRequestCode = 2002
     private var pendingDownload: PendingDownload? = null
 
     /** Supernote Chauvet internal sync folder */
     private val syncFolderPath: String
-        get() = Environment.getExternalStorageDirectory().absolutePath + "/Document/iCloud"
+        get() = Environment.getExternalStorageDirectory().absolutePath + "/Document/AppleBooks"
 
     private data class PendingDownload(
         val url: String,
@@ -62,17 +59,9 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
 
         setSupportActionBar(binding.toolbar)
 
-        appleAuthHandler = AppleAuthHandler(this)
         ensureStorageAccess()
         setupWebView()
         setupSwipeRefresh()
-        handleIntent(intent)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        handleIntent(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -107,10 +96,9 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
         }
 
         jsInterface = JavaScriptInterface(this)
-        jsInterface.setAppleLoginListener(this)
         binding.webView.addJavascriptInterface(jsInterface, "Android")
 
-        binding.webView.webViewClient = ICloudWebClient(binding.progressBar, appleAuthHandler)
+        binding.webView.webViewClient = ICloudWebClient(binding.progressBar, null)
         binding.webView.webChromeClient = ICloudWebChromeClient()
         binding.webView.setDownloadListener { url, userAgent, contentDisposition, mimeType, _ ->
             if (url.isNullOrBlank()) return@setDownloadListener
@@ -123,7 +111,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
 
             startSyncDownload(url, userAgent, contentDisposition, mimeType)
         }
-        binding.webView.loadUrl(iCloudUrl)
+        binding.webView.loadUrl(appleBooksUrl)
     }
 
     private fun setupSwipeRefresh() {
@@ -131,31 +119,6 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
             binding.webView.reload()
             binding.swipeRefresh.isRefreshing = false
         }
-    }
-
-    private fun handleIntent(intent: Intent?) {
-        if (intent?.action != Intent.ACTION_VIEW) return
-
-        val data = intent.data ?: return
-        if (data.scheme == "com.icloud.android.callback") {
-            processAuthResult(AppleAuthHandler.handleCallback(data))
-        }
-    }
-
-    private fun processAuthResult(result: AppleAuthResult?) {
-        if (result == null) return
-
-        if (result.success && result.code != null) {
-            Toast.makeText(this, getString(R.string.apple_login_success), Toast.LENGTH_SHORT).show()
-            appleAuthHandler.completeLogin(binding.webView, result.code)
-        } else {
-            val errorMsg = result.error ?: getString(R.string.apple_login_cancelled)
-            Toast.makeText(this, getString(R.string.apple_login_failed, errorMsg), Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onAppleLoginRequested() {
-        appleAuthHandler.startAuth(getString(R.string.apple_login_client_id))
     }
 
     override fun onBackPressed() {
@@ -307,6 +270,7 @@ class MainActivity : AppCompatActivity(), JavaScriptInterface.AppleLoginListener
                     val targetFile = File(targetDir, fileName)
                     FileOutputStream(targetFile).use { output ->
                         input.copyTo(output)
+                        Unit
                     }
                 }
             } finally {

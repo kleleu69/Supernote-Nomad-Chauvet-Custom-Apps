@@ -1,0 +1,28 @@
+# Built APKs and outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local configuration (may contain SDK paths or signing secrets)
+local.properties
+
+# Signing keystores
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Secrets / credentials
+*.env
+*.pem
+*.p12
+credentials.json
