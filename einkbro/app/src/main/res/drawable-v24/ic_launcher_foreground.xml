@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icon foreground: a cloud silhouette representing the iCloud browser -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Cloud body — black on white for e-ink high contrast -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M54,28 C43,28 34,37 34,48 C29,48 25,52 25,57 C25,62 29,66 34,66 L74,66 C79,66 83,62 83,57 C83,52 79,48 74,48 C74,47.5 74,47 74,46 C74,36 65,28 54,28 Z" />
+    <!-- Small diagonal lightning bolt accent (einkbro "e" motif) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M57,38 L49,54 L55,54 L51,68 L63,50 L57,50 Z" />
+</vector>
