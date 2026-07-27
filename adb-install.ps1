@@ -144,8 +144,7 @@ function Find-Apk {
         [string]$GlobPattern
     )
 
-    $searchRoot = Join-Path $ProjectRoot ($GlobPattern -replace '[^/\\]*$', '') 
-    # Fallback: scan the whole outputs tree
+    # Scan the outputs tree for APKs matching the requested variant
     $apks = Get-ChildItem -Path $ProjectRoot -Recurse -Filter "*.apk" -ErrorAction SilentlyContinue |
         Where-Object { $_.FullName -match "outputs[/\\]apk[/\\]$Variant" }
 
