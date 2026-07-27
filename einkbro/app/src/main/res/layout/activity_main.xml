@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- Minimal e-ink navigation toolbar -->
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@color/eink_toolbar_bg"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:gravity="center_vertical">
+
+        <!-- Back: dims when no history available -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="←"
+            android:textSize="18sp"
+            android:padding="4dp"
+            android:background="@android:color/transparent" />
+
+        <!-- Forward: dims when no forward history -->
+        <Button
+            android:id="@+id/btnForward"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="→"
+            android:textSize="18sp"
+            android:padding="4dp"
+            android:background="@android:color/transparent" />
+
+        <!-- URL / search bar -->
+        <EditText
+            android:id="@+id/urlBar"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/url_bar_bg"
+            android:inputType="textUri"
+            android:imeOptions="actionGo"
+            android:singleLine="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:hint="@string/url_hint"
+            android:selectAllOnFocus="true" />
+
+        <!-- Reload current page -->
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="↻"
+            android:textSize="18sp"
+            android:padding="4dp"
+            android:background="@android:color/transparent" />
+
+        <!-- iCloud Drive shortcut -->
+        <Button
+            android:id="@+id/btnICloud"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="☁"
+            android:textSize="18sp"
+            android:padding="4dp"
+            android:background="@android:color/transparent" />
+
+    </LinearLayout>
+
+    <!-- Thin loading progress bar — minimal visual noise on e-ink -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="100"
+        android:progressTint="@color/icloud_blue"
+        android:visibility="gone" />
+
+    <!-- Full-screen WebView -->
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

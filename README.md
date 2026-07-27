@@ -15,6 +15,7 @@ The main branch is intended to host shared Supernote Nomad platform notes, extra
 |---|---|---|---|
 | ClassWiz Calculator | `classwiz-calculator/` | `feature/supernote-ClassWizCalculator` | `build-apk.yml` |
 | Casio CFX-9960GTe | `cfx9960gt-calculator/` | `feature/supernote-cfx9960gt` | `build-cfx9960gt.yml` |
+| EinkBro iCloud | `einkbro/` | `feature/supernote-einkbro` | `build-einkbro.yml` |
 
 Each app has its own dedicated folder, branch, and CI workflow so changes can be reviewed independently.
 
@@ -26,20 +27,16 @@ Additional app tracks (no code in this repo yet — sideload APKs directly):
    - Upstream base: <https://github.com/bardsoftware/ganttproject.git>
    - Goal: Build GanttProject app.
 
-2. `feature/supernote-einkbro`
-   - Upstream base: <https://github.com/plateaukao/einkbro.git>
-   - Goal: Build einkbro app.
-
-3. `feature/supernote-Apple-Books`
+2. `feature/supernote-Apple-Books`
    - Goal: Build Apple Books app.
 
-4. `feature/supernote-iCloud-Drive`
+3. `feature/supernote-iCloud-Drive`
   - Goal: Build iCloud Drive feature based on supernote NetVirtualDisk app and feature for tunneling with Apple iCloud, and a download/upload feature between iCloud Drive feature and supernote INBOX folder.960GTe app.
 
-5. `feature/supernote-cfx9960GTe`
+4. `feature/supernote-cfx9960GTe`
   - Goal: Build Casio CFX9960GTe app.
 
-6. `feature/supernote-Github`
+5. `feature/supernote-Github`
    - App module: `github-client/`
    - Goal: Build GitHub mobile client for Supernote Nomad.
      Wraps `github.com` in an e-ink-optimised WebView with GitHub icon, persistent

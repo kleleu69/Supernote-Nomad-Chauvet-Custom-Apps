@@ -1,0 +1,22 @@
+#!/bin/sh
+# Gradle wrapper script (standard)
+# To generate gradle-wrapper.jar, run:  gradle wrapper --gradle-version 8.4
+# Or open the project in Android Studio; it will download the wrapper automatically.
+
+# Determine the script's own directory
+APP_HOME="$(cd "$(dirname "$0")" && pwd)"
+APP_NAME="Gradle"
+APP_BASE_NAME="$(basename "$0")"
+CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
+
+# Locate Java
+if [ -n "$JAVA_HOME" ]; then
+    JAVACMD="$JAVA_HOME/bin/java"
+else
+    JAVACMD="java"
+fi
+
+exec "$JAVACMD" \
+  -classpath "$CLASSPATH" \
+  org.gradle.wrapper.GradleWrapperMain \
+  "$@"
