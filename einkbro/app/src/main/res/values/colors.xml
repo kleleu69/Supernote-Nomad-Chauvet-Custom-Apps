@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- E-ink palette: pure black/white high-contrast base -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="eink_toolbar_bg">#F0F0F0</color>
+    <color name="eink_border">#CCCCCC</color>
+    <!-- iCloud blue accent — used for the progress bar -->
+    <color name="icloud_blue">#147EFB</color>
+</resources>
